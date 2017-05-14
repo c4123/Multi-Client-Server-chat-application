@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="javaSwing-Server_Client/src"/>
+	<classpathentry kind="src" path="UniChat_client/app/src/androidTest/java"/>
+	<classpathentry kind="src" path="UniChat_client/app/src/main/java"/>
+	<classpathentry kind="src" path="UniChat_client/app/src/test/java"/>
+	<classpathentry kind="lib" path="javaSwing-Server_Client/dist/TP_chat.jar"/>
+	<classpathentry kind="lib" path="UniChat_client/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="javaSwing-Server_Client/build/classes"/>
+</classpath>

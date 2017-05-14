@@ -1,7 +1,6 @@
 package aboullaite;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -9,10 +8,18 @@ import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 
 // Class to manage Client chat Box.
@@ -21,8 +28,9 @@ public class ChatClient {
     /** Chat client access */
     static class ChatAccess extends Observable {
         private Socket socket;
-        private OutputStream outputStream;
-
+        //private OutputStream outputStream;
+        private PrintStream os;
+        private BufferedReader is;
         @Override
         public void notifyObservers(Object arg) {
             super.setChanged();
@@ -32,17 +40,19 @@ public class ChatClient {
         /** Create socket, and receiving thread */
         public void InitSocket(String server, int port) throws IOException {
             socket = new Socket(server, port);
-            outputStream = socket.getOutputStream();
-
+            //outputStream = socket.getOutputStream();
+            os = new PrintStream(socket.getOutputStream(),true,"UTF8");
             Thread receivingThread = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        BufferedReader reader = new BufferedReader(
-                                new InputStreamReader(socket.getInputStream()));
+                        is = new BufferedReader(
+                                new InputStreamReader(socket.getInputStream(),"UTF8"));
                         String line;
-                        while ((line = reader.readLine()) != null)
-                            notifyObservers(line);
+                        while ((line = is.readLine()) != null){
+                          notifyObservers(line);
+                    
+                        }
                     } catch (IOException ex) {
                         notifyObservers(ex);
                     }
@@ -56,9 +66,10 @@ public class ChatClient {
         /** Send a line of text */
         public void send(String text) {
             try {
-                outputStream.write((text + CRLF).getBytes());
-                outputStream.flush();
-            } catch (IOException ex) {
+                os.println(text);
+            	//os.write((text + CRLF).getBytes());
+                os.flush();
+            } catch (Exception ex) {
                 notifyObservers(ex);
             }
         }
@@ -124,7 +135,7 @@ public class ChatClient {
         }
 
         /** Updates the UI depending on the Object argument */
-        public void update(Observable o, Object arg) {
+		public void update(Observable o, Object arg) {
             final Object finalArg = arg;
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
