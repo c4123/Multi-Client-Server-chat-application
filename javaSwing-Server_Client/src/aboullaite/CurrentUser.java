@@ -3,32 +3,18 @@ package aboullaite;
 import java.net.Socket;
 
 public class CurrentUser {
-	private String setId;
-	private String setPwd;
-	private String setNick;
-	private String setMajor;
-	private String setImg;
-	Socket socket;
+	private String id;
+	private String nickname;
+	private String major;
+	private Socket socket;
 
 	public CurrentUser(){}
 
-	public CurrentUser(String setId, String setPwd)
+	public CurrentUser(String id, String nickname,String major,Socket socket)
 	{
-	    this.setId = setId;
-	    this.setPwd = setPwd;
-	    this.setNick = null;
-	    this.setMajor = null;
-	    this.setImg =  null;
-	    this.socket = null;
-	}
-
-	public CurrentUser(String setId, String setPwd, String setNick, String setMajor, String setImg)
-	{
-	    this.setId = setId;
-	    this.setPwd = setPwd;
-	    this.setNick = setNick;
-	    this.setMajor = setMajor;
-	    this.setImg =  setImg;
-	    this.socket = null;
+		this.id = id;
+		this.nickname = nickname;
+		this.major = major;
+		this.socket = socket;
 	}
 }
