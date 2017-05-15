@@ -8,6 +8,8 @@ import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Observable;
@@ -16,6 +18,7 @@ import java.util.Observer;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -29,8 +32,8 @@ public class ChatClient {
     static class ChatAccess extends Observable {
         private Socket socket;
         //private OutputStream outputStream;
-        private PrintStream os;
-        private BufferedReader is;
+        private ObjectOutputStream os;
+        private ObjectInputStream is;
         @Override
         public void notifyObservers(Object arg) {
             super.setChanged();
@@ -41,17 +44,35 @@ public class ChatClient {
         public void InitSocket(String server, int port) throws IOException {
             socket = new Socket(server, port);
             //outputStream = socket.getOutputStream();
-            os = new PrintStream(socket.getOutputStream(),true,"UTF8");
+            os = new ObjectOutputStream(socket.getOutputStream());
+            is = new ObjectInputStream(socket.getInputStream());
+            
+            
+            //LOGIN 창
+            String result="";
+            String userId = JOptionPane.showInputDialog("Email Address(test@dongguk.edu로는 로그인 안됨)");
+			String passWd = JOptionPane.showInputDialog("Password");
+			LoginData loginData = new LoginData(userId,passWd);
+			
+			os.writeObject(loginData);
+			os.flush();
+			result = is.readUTF();
+			System.out.println("login Result: "+result);
+			
+			if(result.equals("no")){
+				notifyObservers("로그인에 실패하셨습니다.");
+				return;
+			}
+			
             Thread receivingThread = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        is = new BufferedReader(
-                                new InputStreamReader(socket.getInputStream(),"UTF8"));
+                    	//is = new ObjectInputStream(socket.getInputStream());
                         String line;
-                        while ((line = is.readLine()) != null){
-                          notifyObservers(line);
-                    
+                        
+                        while ((line = is.readUTF()) != null){
+                          notifyObservers(line);    
                         }
                     } catch (IOException ex) {
                         notifyObservers(ex);
@@ -65,9 +86,8 @@ public class ChatClient {
 
         /** Send a line of text */
         public void send(String text) {
-            try {
-                os.println(text);
-            	//os.write((text + CRLF).getBytes());
+            try {           	            	
+                os.writeUTF(text);
                 os.flush();
             } catch (Exception ex) {
                 notifyObservers(ex);
@@ -161,6 +181,8 @@ public class ChatClient {
 
         try {
             access.InitSocket(server,port);
+            
+            
         } catch (IOException ex) {
             System.out.println("Cannot connect to " + server + ":" + port);
             ex.printStackTrace();

@@ -21,6 +21,9 @@ public class ClientServer {
 			new ChatClient().main(arguments);
 		}
 		
+		
+		
+		
 	}
 
 }

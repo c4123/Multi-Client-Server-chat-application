@@ -6,12 +6,10 @@
 
 package aboullaite;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-
 /**
  *
  * @author mohammed
@@ -20,11 +18,13 @@ import java.net.Socket;
 // For every client's connection we call this class
 public class clientThread extends Thread {
 	private String clientName = null;
-	private BufferedReader is = null;
-	private PrintStream os = null;
+	private ObjectInputStream is = null;
+	private ObjectOutputStream os = null;
 	private Socket clientSocket = null;
 	private final clientThread[] threads;
 	private int maxClientsCount;
+	private User user;
+	boolean loginSuccess;
 
 	public clientThread(Socket clientSocket, clientThread[] threads) {
 		this.clientSocket = clientSocket;
@@ -35,42 +35,62 @@ public class clientThread extends Thread {
 	public void run() {
 		int maxClientsCount = this.maxClientsCount;
 		clientThread[] threads = this.threads;
-
+		loginSuccess = false;
 		try {
 			/*
 			 * Create input and output streams for this client.
 			 */
-			is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(),"UTF8"));
-			os = new PrintStream(clientSocket.getOutputStream(),true,"UTF8");
-			String name;
-			while (true) {
-				os.println("enter your name");
-				name = is.readLine().trim();
-				if (name.indexOf('@') == -1) {
-					break;
-				} else {
-					os.println("The name should not contain '@' character.");
+			is = new ObjectInputStream(clientSocket.getInputStream());
+			os = new ObjectOutputStream(clientSocket.getOutputStream());
+			String nickname="";
+			
+			/*
+			 * Login Process 
+			 */
+			while (!loginSuccess) {
+				LoginData data = (LoginData)is.readObject();	
+
+				if(data.getId().equals("test@dongguk.edu")){ //로긴 안되는 아이디 테스트용
+					loginSuccess =false;
+					os.writeUTF("no");
+					os.flush();
+				}
+				else {
+					//DB검사 로직 넣어야함
+					//지금은 모든경우 로그인 되게 해놓았음. 
+					loginSuccess = true;
+					os.writeUTF("ok");
+					os.writeUTF("enter your nickname");
+					os.flush();		
+					nickname = is.readUTF().trim();
+					user = new User(data.getId(), nickname, clientSocket);
+					//나중에 user추가하기.
 				}
 			}
-
+			
+			//로그인  성공한 사람에 대한 환영메세지
 			/* Welcome the new the client. */
-			os.println("Welcome " + name + " to our chat room.\nTo leave enter /quit in a new line.");
+			os.writeUTF("Welcome " + user.getId() + "("+user.getNickname()+") to our chat room.\nTo leave enter /quit in a new line.");
+			os.flush();
+			
+			
 			synchronized (this) {
 				for (int i = 0; i < maxClientsCount; i++) {
-					if (threads[i] != null && threads[i] == this) {
-						clientName = "@" + name;
+					if (threads[i] != null && threads[i] == this ) {
+						clientName = "@"+ user.getNickname();
 						break;
 					}
 				}
 				for (int i = 0; i < maxClientsCount; i++) {
-					if (threads[i] != null && threads[i] != this) {
-						threads[i].os.println("*** A new user " + name + " entered the chat room !!! ***");
+					if (threads[i] != null && threads[i] != this && threads[i].loginSuccess) { //로그인 성공한 사람한테만 보여줌
+						threads[i].os.writeUTF("*** A new user " +user.getId() + "("+user.getNickname()+") entered the chat room !!! ***");
+						threads[i].os.flush();
 					}
 				}
 			}
 			/* Start the conversation. */
 			while (true) {
-				String line = is.readLine();
+				String line = is.readUTF();
 				if (line.startsWith("/quit")) {
 					break;
 				}
@@ -84,12 +104,15 @@ public class clientThread extends Thread {
 								for (int i = 0; i < maxClientsCount; i++) {
 									if (threads[i] != null && threads[i] != this && threads[i].clientName != null
 											&& threads[i].clientName.equals(words[0])) {
-										threads[i].os.println("<" + name + "> " + words[1]);
+										
+										threads[i].os.writeUTF("<" + nickname + "> " + words[1]);
+										threads[i].os.flush();
 										/*
 										 * Echo this message to let the client
 										 * know the private message was sent.
 										 */
-										this.os.println(">" + name + "> " + words[1]);
+										this.os.writeUTF(">" + nickname + "> " + words[1]);
+										this.os.flush();
 										break;
 									}
 								}
@@ -101,10 +124,11 @@ public class clientThread extends Thread {
 				 */
 				} else if(line.startsWith("/user")) {
 					synchronized (this) {
-						this.os.println("Current user Info");
+						this.os.writeUTF("Current user Info");
 						for(int j = 0; j < maxClientsCount; j++) {
-							if(threads[j] != null && threads[j].clientName != null)
-								this.os.println(threads[j].clientName + " InetAddress : "+threads[j].clientSocket.getInetAddress());
+							if(threads[j] != null && threads[j].clientName != null && threads[j].loginSuccess)
+								this.os.writeUTF(threads[j].clientName + " InetAddress : "+threads[j].clientSocket.getInetAddress());
+								this.os.flush();
 						}
 					}
 				} else {
@@ -113,8 +137,9 @@ public class clientThread extends Thread {
 					 */
 					synchronized (this) {
 						for (int i = 0; i < maxClientsCount; i++) {
-							if (threads[i] != null && threads[i].clientName != null) {
-								threads[i].os.println("<" + name + "> " + line);
+							if (threads[i] != null && threads[i].clientName != null && threads[i].loginSuccess) {
+								threads[i].os.writeUTF("<" + nickname + "> " + line);
+								threads[i].os.flush();
 							}
 						}
 					}
@@ -122,12 +147,14 @@ public class clientThread extends Thread {
 			}
 			synchronized (this) {
 				for (int i = 0; i < maxClientsCount; i++) {
-					if (threads[i] != null && threads[i] != this && threads[i].clientName != null) {
-						threads[i].os.println("*** The user " + name + " is leaving the chat room !!! ***");
+					if (threads[i] != null && threads[i] != this && threads[i].clientName != null && threads[i].loginSuccess) {
+						threads[i].os.writeUTF("*** The user " + nickname + " is leaving the chat room !!! ***");
+						threads[i].os.flush();
 					}
 				}
 			}
-			os.println("*** Bye " + name + " ***");
+			os.writeUTF("*** Bye " + nickname + " ***");
+			os.flush();
 
 			/*
 			 * Clean up. Set the current thread variable to null so that a new
@@ -147,7 +174,7 @@ public class clientThread extends Thread {
 			is.close();
 			os.close();
 			clientSocket.close();
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 		}
 	}
 }

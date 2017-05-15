@@ -2,10 +2,10 @@
 
 package aboullaite;
 
-import java.io.PrintStream;
 import java.io.IOException;
-import java.net.Socket;
+import java.io.PrintStream;
 import java.net.ServerSocket;
+import java.net.Socket;
 /**
  *
  * @author mohammed
@@ -21,6 +21,7 @@ public class MultiThreadChatServerSync {
   // This chat server can accept up to maxClientsCount clients' connections.
   private static final int maxClientsCount = 10;
   private static final clientThread[] threads = new clientThread[maxClientsCount];
+  
 
   public static void main(String args[]) {
 
