@@ -3,9 +3,9 @@ import java.sql.*;
 
 public class DBHelper {
 	   private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   private final String DB_URL = "jdbc:mysql://localhost/test";
+	   private final String DB_URL = "jdbc:mysql://52.78.111.144:3306/unichat";
 
-	   private final String USER = "root";
+	   private final String USER = "jbkim";
 	   private final String PASS = "1q2w3e4r!!";
 	   
 	   private Connection conn = null;
@@ -13,7 +13,7 @@ public class DBHelper {
 	   
 	   public DBHelper() {
 		   try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(JDBC_DRIVER);
 		   } catch (ClassNotFoundException e) {
 			   e.printStackTrace();
 		   }
@@ -62,10 +62,10 @@ public class DBHelper {
 	   
 	   public static void main(String[] args) {
 		   DBHelper dbHelper = new DBHelper();
-		   String insertStmt = "INSERT INTO USER(id) VALUES('vool@naver.com')";
-		   String selectStmt = "Select * from USER";
+		   //String insertStmt = "INSERT INTO user(id, passwd) VALUES('niutn@naver.com', '1q2w3e4r!!')";
+		   String selectStmt = "Select * from user";
 		   
-		   dbHelper.executeUpdate(insertStmt);
+		   //dbHelper.executeUpdate(insertStmt);
 		   ResultSet rs = dbHelper.executeQuery(selectStmt);
 		   try {
 			   while(rs.next()) {
