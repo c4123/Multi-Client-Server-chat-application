@@ -52,7 +52,7 @@ public class ChatClient {
             String result="";
             String userId = JOptionPane.showInputDialog("Email Address(test@dongguk.edu로는 로그인 안됨)");
 			String passWd = JOptionPane.showInputDialog("Password");
-			LoginData loginData = new LoginData(userId,passWd);
+			LoginData loginData = new LoginData(userId,passWd,Constants.TYPE_LOGIN);
 			
 			os.writeObject(loginData);
 			os.flush();

@@ -5,10 +5,12 @@ import java.io.Serializable;
 public class LoginData implements Serializable{
 	private String id;
 	private String passwd;
+	private int type; //0이면 회원가입. 1이면 로그인
 	
-	public LoginData(String id, String passWd){
+	public LoginData(String id, String passWd, int type){
 		this.id = id;
 		this.passwd = passwd;
+		this.type = type;
 	}
 	
 	public String getId() {
@@ -22,6 +24,12 @@ public class LoginData implements Serializable{
 	}
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+	public void setType(int type){
+		this.type = type;
+	}
+	public int getType(){
+		return type;
 	}
 
 	

@@ -50,21 +50,27 @@ public class clientThread extends Thread {
 			while (!loginSuccess) {
 				LoginData data = (LoginData)is.readObject();	
 
-				if(data.getId().equals("test@dongguk.edu")){ //로긴 안되는 아이디 테스트용
-					loginSuccess =false;
-					os.writeUTF("no");
-					os.flush();
+				int dataType = data.getType();
+				if(dataType == Constants.TYPE_REGISTER){
+					 //등록 과정
 				}
-				else {
-					//DB검사 로직 넣어야함
-					//지금은 모든경우 로그인 되게 해놓았음. 
-					loginSuccess = true;
-					os.writeUTF("ok");
-					os.writeUTF("enter your nickname");
-					os.flush();		
-					nickname = is.readUTF().trim();
-					user = new User(data.getId(), nickname, clientSocket);
-					//나중에 user추가하기.
+				else if(dataType == Constants.TYPE_LOGIN){
+					if(data.getId().equals("test@dongguk.edu")){ //로긴 안되는 아이디 테스트용
+						loginSuccess =false;
+						os.writeUTF("no");
+						os.flush();
+					}
+					else {
+						//DB검사 로직 넣어야함
+						//지금은 모든경우 로그인 되게 해놓았음. 
+						loginSuccess = true;
+						os.writeUTF("ok");
+						os.writeUTF("enter your nickname");
+						os.flush();		
+						nickname = is.readUTF().trim();
+						user = new User(data.getId(), nickname, clientSocket);
+						//나중에 user추가하기.
+					}
 				}
 			}
 			
