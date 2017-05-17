@@ -19,7 +19,9 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -106,13 +108,16 @@ public class ChatClient {
 
     /** Chat client UI */
     static class ChatFrame extends JFrame implements Observer {
-
+    	private JTabbedPane tabbedPane;
+    	private JPanel userListPanel;
         private JTextArea textArea;
         private JTextField inputTextField;
         private JButton sendButton;
         private ChatAccess chatAccess;
 
         public ChatFrame(ChatAccess chatAccess) {
+        	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        	
             this.chatAccess = chatAccess;
             chatAccess.addObserver(this);
             buildGUI();
@@ -124,6 +129,11 @@ public class ChatClient {
             textArea.setEditable(false);
             textArea.setLineWrap(true);
             add(new JScrollPane(textArea), BorderLayout.CENTER);
+            
+            tabbedPane = new JTabbedPane();
+            userListPanel = new JPanel();
+            tabbedPane.add("User List", userListPanel);
+            add(tabbedPane, BorderLayout.EAST);
 
             Box box = Box.createHorizontalBox();
             add(box, BorderLayout.SOUTH);
