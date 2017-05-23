@@ -7,9 +7,14 @@
 package aboullaite;
 
 import java.io.IOException;
+
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import aboullaite.*;
 /**
  *
  * @author mohammed
@@ -24,7 +29,8 @@ public class clientThread extends Thread {
 	private final clientThread[] threads;
 	private int maxClientsCount;
 	private User user;
-	boolean loginSuccess;
+	private boolean loginSuccess;
+	private ArrayList<CurrentUser> userList;
 
 	public clientThread(Socket clientSocket, clientThread[] threads) {
 		this.clientSocket = clientSocket;
@@ -48,28 +54,29 @@ public class clientThread extends Thread {
 			 * Login Process 
 			 */
 			while (!loginSuccess) {
-				LoginData data = (LoginData)is.readObject();	
+				DBHelper.getConnection();
+				LoginData data = (LoginData)is.readObject();
+				String id = data.getId();
 
 				int dataType = data.getType();
-				if(dataType == Constants.TYPE_REGISTER){
-					 //등록 과정
+				if(dataType == Constants.TYPE_REGISTER) {
+					
 				}
-				else if(dataType == Constants.TYPE_LOGIN){
-					if(data.getId().equals("test@dongguk.edu")){ //로긴 안되는 아이디 테스트용
-						loginSuccess =false;
-						os.writeUTF("no");
-						os.flush();
-					}
-					else {
-						//DB검사 로직 넣어야함
-						//지금은 모든경우 로그인 되게 해놓았음. 
+				else if(dataType == Constants.TYPE_LOGIN) {
+					boolean found = DBHelper.getIdCheck(id);
+					
+					if(found) {
 						loginSuccess = true;
 						os.writeUTF("ok");
 						os.writeUTF("enter your nickname");
 						os.flush();		
 						nickname = is.readUTF().trim();
+						os.writeObject(userList.add(new CurrentUser(data.getId(), nickname)));
 						user = new User(data.getId(), nickname, clientSocket);
-						//나중에 user추가하기.
+					}
+					else {
+						os.writeUTF("실패");
+						os.flush();
 					}
 				}
 			}
@@ -169,6 +176,7 @@ public class clientThread extends Thread {
 			synchronized (this) {
 				for (int i = 0; i < maxClientsCount; i++) {
 					if (threads[i] == this) {
+						userList.remove()
 						threads[i] = null;
 					}
 				}
