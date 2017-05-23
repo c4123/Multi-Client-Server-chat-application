@@ -2,80 +2,62 @@ package aboullaite;
 import java.sql.*;
 
 public class DBHelper {
-	   private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	   private final String DB_URL = "jdbc:mysql://52.78.111.144:3306/unichat";
+	   private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
+	   private static final String DB_URL = "jdbc:mysql://52.78.111.144:3306/unichat";
 
-	   private final String USER = "jbkim";
-	   private final String PASS = "1q2w3e4r!!";
+	   private static final String USER = "jbkim";
+	   private static final String PASS = "1q2w3e4r!!";
 	   
-	   private Connection conn = null;
-	   private Statement stmt = null;
+	   private static Connection conn = null;
+	   private static Statement stmt = null;
+	   private static PreparedStatement ps = null;
+	   private static ResultSet rs = null;
 	   
-	   public DBHelper() {
+	   private DBHelper() {
+
+	   }
+	   
+	   public static Connection getConnection() {
+		   
+		   if(conn != null) {
+			   return conn;
+		   }
+		   
 		   try {
 			Class.forName(JDBC_DRIVER);
-		   } catch (ClassNotFoundException e) {
+			conn = DriverManager.getConnection(DB_URL, USER, PASS);
+		   } catch (ClassNotFoundException | SQLException e) {
 			   e.printStackTrace();
 		   }
-	   }
-	   
-	   private void open() {
-		   try {
-			   conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			   stmt = conn.createStatement();
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-		   }
-	   }
-	   
-	   private void close() {
-		   try {
-			   stmt.close();
-			   conn.close();
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-		   }
-	   }
-	   
-	   public boolean executeUpdate(String sql) {
-		   open();
-		   try {
-			   stmt.executeUpdate(sql);
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-			   return false;
-		   }
-		   close();
-		   return true;
-	   }
-	   
-	   public ResultSet executeQuery(String sql) {
-		   open();
-		   ResultSet rs = null;
-		   try {
-			   rs = stmt.executeQuery(sql);
-		   } catch (SQLException e) {
-			   e.printStackTrace();
-		   }
-		   return rs;
-	   }
-	   
-	   public static void main(String[] args) {
-		   DBHelper dbHelper = new DBHelper();
-		   //String insertStmt = "INSERT INTO user(id, passwd) VALUES('niutn@naver.com', '1q2w3e4r!!')";
-		   String selectStmt = "Select * from user";
 		   
-		   //dbHelper.executeUpdate(insertStmt);
-		   ResultSet rs = dbHelper.executeQuery(selectStmt);
+		   return conn;
+	   }
+	   
+	   private static void close() {
 		   try {
-			   while(rs.next()) {
-				   String id = rs.getString("id");
-				   
-				   System.out.println("ID: " + id);
-			   }
+		   if(rs != null) rs.close();
+		   if(stmt != null) stmt.close();			   
+		   if(ps != null) ps.close();
 		   } catch (SQLException e) {
-			   e.printStackTrace();
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 		   }
 	   }
 	   
+	   public static boolean getIdCheck(String id) {
+		   boolean result = false;
+		   
+		   try {
+			   ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+			   ps.setString(1,  id.trim());
+			   rs = ps.executeQuery();
+			   if(rs.next())
+				   result = true;
+		   } catch(SQLException e) {
+			   
+		   } finally {
+			   close();
+		   }
+		   return result;
+	   }
 }
