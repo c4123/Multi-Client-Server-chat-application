@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -36,6 +34,7 @@ public class ChatClient {
         //private OutputStream outputStream;
         private ObjectOutputStream os;
         private ObjectInputStream is;
+        private ArrayList<User> currentUser;
         @Override
         public void notifyObservers(Object arg) {
             super.setChanged();
@@ -58,10 +57,11 @@ public class ChatClient {
 			
 			os.writeObject(loginData);
 			os.flush();
+	
 			result = is.readUTF();
 			System.out.println("login Result: "+result);
 			
-			if(result.equals("no")){
+			if(result.equals(Constants.LOGIN_FAILED)){
 				notifyObservers("로그인에 실패하셨습니다.");
 				return;
 			}
@@ -71,14 +71,30 @@ public class ChatClient {
                 public void run() {
                     try {
                     	//is = new ObjectInputStream(socket.getInputStream());
-                        String line;
-                        
-                        while ((line = is.readUTF()) != null){
-                          notifyObservers(line);    
-                        }
-                    } catch (IOException ex) {
+                    	Data data ;
+                    	 while ((data = (Data)is.readObject()) != null){
+                    			if(data.getType()==Constants.TYPE_MSG){     	
+                               		notifyObservers("<"+data.getSendor()+">"+data.getMsg());   
+                               	}
+                               	else if(data.getType()==Constants.TYPE_USER_LIST){
+                               		//현재 유저 갱신되면 받는 부분.
+                               		currentUser = data.getUserList();
+                               		System.out.println("유저 리스트 새로 받음");
+                               		for(int i=0;i<currentUser.size();i++){
+                               			System.out.println(currentUser.get(i).getId());
+                               		}
+                               	}
+                         }
+                        	
+                       
+                       
+                    } catch (IOException ex ) {
                         notifyObservers(ex);
-                    }
+                    } catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						  notifyObservers(e);
+					}
                 }
             };
             receivingThread.start();
@@ -89,7 +105,7 @@ public class ChatClient {
         /** Send a line of text */
         public void send(String text) {
             try {           	            	
-                os.writeUTF(text);
+            	os.writeObject(new Data(Constants.TYPE_MSG,text,null));
                 os.flush();
             } catch (Exception ex) {
                 notifyObservers(ex);
@@ -191,7 +207,6 @@ public class ChatClient {
 
         try {
             access.InitSocket(server,port);
-            
             
         } catch (IOException ex) {
             System.out.println("Cannot connect to " + server + ":" + port);

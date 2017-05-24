@@ -7,7 +7,7 @@ public class LoginData implements Serializable{
 	private String passwd;
 	private int type; //0이면 회원가입. 1이면 로그인
 	
-	public LoginData(String id, String passWd, int type){
+	public LoginData(String id, String passwd, int type){
 		this.id = id;
 		this.passwd = passwd;
 		this.type = type;
