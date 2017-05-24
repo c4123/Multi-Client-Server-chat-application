@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class LoginData implements Serializable{
 	private String id;
 	private String passwd;
+	private String passwdConfirm;
+	
 	private int type; //0이면 회원가입. 1이면 로그인
 	
 	public LoginData(String id, String passwd, int type){
@@ -30,6 +32,13 @@ public class LoginData implements Serializable{
 	}
 	public int getType(){
 		return type;
+	}
+	public String getPasswdConfirm() {
+		return passwdConfirm;
+	}
+
+	public void setPasswdConfirm(String passwdConfirm) {
+		this.passwdConfirm = passwdConfirm;
 	}
 
 	
