@@ -1,19 +1,16 @@
 package aboullaite;
 
-import java.net.Socket;
-
 public class User {
 	private String id;
 	private String nickname;
-	private Socket socket;
+
 
 	public User(){}
 
-	public User(String id, String nickname,Socket socket)
+	public User(String id, String nickname)
 	{
 		this.id = id;
 		this.nickname = nickname;
-		this.socket = socket;
 	}
 
 	public String getId() {
@@ -32,13 +29,6 @@ public class User {
 		this.nickname = nickname;
 	}
 
-	public Socket getSocket() {
-		return socket;
-	}
-
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
 
 
 }
