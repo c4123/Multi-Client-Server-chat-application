@@ -1,0 +1,129 @@
+package bumbums.client_android;
+
+import android.content.Intent;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import aboullaite.Data;
+import aboullaite.LoginData;
+import aboullaite.util.Constants;
+
+public class LoginActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Data> {
+
+    private Client mClient;
+    private EditText mEmail;
+    private EditText mPasswd;
+    private EditText mServerIP;
+    private Button mLoginBtn;
+    private Button mJoinBtn;
+    private Button mServerBtn;
+    private final int LOGIN_LOADER = 1;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        mEmail = (EditText) findViewById(R.id.et_email);
+        mPasswd = (EditText) findViewById(R.id.et_passwd);
+        mServerIP = (EditText) findViewById(R.id.et_ipaddress);
+        mJoinBtn = (Button) findViewById(R.id.btn_join);
+        mLoginBtn = (Button) findViewById(R.id.btn_login);
+        mServerBtn = (Button) findViewById(R.id.btn_serverAccess);
+
+        // connect to the server
+        final LoaderManager loaderManager = getSupportLoaderManager();
+        final Loader<Data> loginLoader = loaderManager.getLoader(LOGIN_LOADER);
+
+
+        //서버 접속
+        mServerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClient.SERVERIP = mServerIP.getText().toString();
+                if (loginLoader == null) {
+                    loaderManager.initLoader(LOGIN_LOADER, null, LoginActivity.this).forceLoad();
+                } else {
+                    loaderManager.restartLoader(LOGIN_LOADER, null, LoginActivity.this);
+                }
+            }
+        });
+
+        //로그인
+        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               final String id = mEmail.getText().toString();
+                final String passwd = mPasswd.getText().toString();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        LoginData loginData = new LoginData(id, passwd, Constants.TYPE_LOGIN);
+                        mClient.sendMessage(loginData);
+                    }
+                }).start();
+
+            }
+        });
+
+        mJoinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+    @Override
+    public Loader<Data> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<Data>(this) {
+            @Override
+            protected void onStartLoading() {
+                super.onStartLoading();
+                Log.d("#####","onstartLoding");
+            }
+
+            @Override
+            public Data loadInBackground() {
+                Log.d("#####","doinBack");
+                mClient = new Client(new Client.OnMessageReceived() {
+                    @Override
+                    public void messageReceived(Data data) {
+                        deliverResult(data);
+                    }
+                });
+                mClient.run();
+                return null;
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Data> loader, Data data) {
+        //로딩창 사라지게 하기
+        //데이터 확인해서 처리하기.
+        Log.d("#####","들어온데이터"+data.getMsg());
+/*        if(data.getMsg().equals(Constants.LOGIN_SUCCESS)){
+            Intent i = new Intent(getBaseContext(),MainActivity.class);
+            startActivity(i);
+        }*/
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Data> loader) {
+
+    }
+
+}
