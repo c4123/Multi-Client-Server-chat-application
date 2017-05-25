@@ -73,9 +73,7 @@ public class clientThread extends Thread {
 					
 					if(found) {
 						loginSuccess = true;
-						os.writeUTF(Constants.LOGIN_SUCCESS);
-						os.flush();
-						
+						serverMsg(Constants.LOGIN_SUCCESS);
 						serverMsg("enter your nickname");
 						
 						Data receiveData = (Data)is.readObject();
@@ -83,8 +81,7 @@ public class clientThread extends Thread {
 						user = new User(data.getId(), clientName);
 					}
 					else {
-						os.writeUTF(Constants.LOGIN_FAILED);
-						os.flush();
+						serverMsg(Constants.LOGIN_FAILED);
 					}
 					
 				}

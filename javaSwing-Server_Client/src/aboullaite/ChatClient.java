@@ -57,8 +57,14 @@ public class ChatClient {
 			
 			os.writeObject(loginData);
 			os.flush();
-	
-			result = is.readUTF();
+			
+			
+			try {
+				result = ((Data)is.readObject()).getMsg();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			System.out.println("login Result: "+result);
 			
 			if(result.equals(Constants.LOGIN_FAILED)){
