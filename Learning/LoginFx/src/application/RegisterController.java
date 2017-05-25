@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -16,9 +17,12 @@ public class RegisterController{
 	
 	@FXML private Button Regcl;
 	@FXML private Button Regconfirm;
+	@FXML private Button Mailconfirm;
 	@FXML private CheckBox Check1;
 	@FXML private CheckBox Check2;
 	@FXML private Label Regwarning;
+	@FXML private PasswordField pwd;
+	@FXML private PasswordField pwdconf;
 	
 	public void Regcl(ActionEvent event) throws Exception{
 		
@@ -45,4 +49,14 @@ public class RegisterController{
 			Regwarning.setText("약관에 대해 동의하지 않았습니다");
 		}
 	}
+	public void Mailconfirm(ActionEvent event) throws Exception{
+		
+		
+		if(pwd.getText().equals(pwdconf.getText())){
+			Regwarning.setText("");
+		}
+		else
+			Regwarning.setText("비밀번호가 일치하지 않습니다");
+	}
+	
 }
