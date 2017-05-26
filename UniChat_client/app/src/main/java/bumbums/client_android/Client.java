@@ -5,6 +5,7 @@ package bumbums.client_android;
  */
 
 import android.util.Log;
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -17,49 +18,68 @@ import aboullaite.util.Constants;
 
 public class Client {
     private Data serverMessage;
-    public static String SERVERIP ; // your computer IP
+    public static String SERVERIP; // your computer IP
 
     // address
     public static final int SERVERPORT = 2222;
+    private Socket socket;
     private OnMessageReceived mMessageListener = null;
     private boolean mRun = false;
-
-    ObjectOutputStream os;
-    ObjectInputStream is;
+    private ObjectOutputStream os;
+    private ObjectInputStream is;
     private ArrayList<User> currentUser;
+    private String email;
+    public static String nickname;
+
+    private static class Singleton {
+        public static final Client instance = new Client();
+    }
+
+    public static Client getInstance() {
+
+        return Singleton.instance;
+    }
 
     /**
      * Constructor of the class. OnMessagedReceived listens for the messages
      * received from server
      */
-    public Client(OnMessageReceived listener){mMessageListener = listener;}
-    public void setListener(OnMessageReceived listener){mMessageListener = listener;}
+    private Client() {
+    }
+
+    ;
+
+    //public Client(OnMessageReceived listener){mMessageListener = listener;}
+    public void setListener(OnMessageReceived listener) {
+        mMessageListener = listener;
+    }
 
     /**
      * Sends the message entered by client to the server
      *
-     * @param message
-     *            text entered by client
+     * @param message text entered by client
      */
     public void sendMessage(Object message) {
         try {
-            if(message instanceof LoginData){
-                Log.d("#####","LoginDataInstance = "+((LoginData) message).getId());
+            if (message instanceof LoginData) {
+                Log.d("#####", "LoginDataInstance = " + ((LoginData) message).getId());
+                email = ((LoginData) message).getId();
+                os.writeObject(message);
+                os.flush();
+            } else if (message instanceof Data) {
+                Log.d("#####", "dataInstance = " + ((Data) message).getMsg());
                 os.writeObject(message);
                 os.flush();
             }
-            else if(message instanceof Data){
-                Log.d("#####","dataInstance = "+((Data) message).getMsg());
-                os.writeObject(message);
-                os.flush();
-            }
-        }catch (Exception ex){
+        } catch (Exception ex) {
 
         }
     }
+
     public void stopClient() {
         mRun = false;
     }
+
     public void run() {
 
         mRun = true;
@@ -70,7 +90,7 @@ public class Client {
             Log.e("#####", "C: Connecting...");
 
             // create a socket to make the connection with the server
-            Socket socket = new Socket(serverAddr, SERVERPORT);
+            socket = new Socket(serverAddr, SERVERPORT);
             Log.e("#####", SERVERIP);
             try {
 
@@ -87,16 +107,16 @@ public class Client {
                 // in this while the client listens for the messages sent by the
                 // server
                 while (mRun) {
-                    serverMessage = (Data)is.readObject();
-                        if (serverMessage != null && mMessageListener != null) {
-                            // call the method messageReceived from MyActivity class
-                            mMessageListener.messageReceived(serverMessage);
-                            Log.e("#####", "S: Received Message: '"
-                                    + serverMessage + "'");
+                    serverMessage = (Data) is.readObject();
+                    if (serverMessage != null && mMessageListener != null) {
+                        // call the method messageReceived from MyActivity class
+                        mMessageListener.messageReceived(serverMessage);
+                        Log.e("#####", "S: Received Message: '"
+                                + serverMessage + "'");
                     }
                     serverMessage = null;
                 }
-
+                Log.e("#####","mRun빠져나옴");
             } catch (Exception e) {
                 Log.e("#####", "S: Error", e);
             } finally {
@@ -118,5 +138,15 @@ public class Client {
     // class at on asynckTask doInBackground
     public interface OnMessageReceived {
         public void messageReceived(Data data);
+    }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+    }
+    public String getNickname(){
+        return nickname;
+    }
+    public String getEmail(){
+        return email;
     }
 }
