@@ -1,51 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
-
-
+    android:layout_height="50dp"
     android:orientation="horizontal">
     <LinearLayout
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:padding="10dp"
         >
         <ImageView
             android:id="@+id/iv_list_profile"
             android:src="@drawable/default_user1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:adjustViewBounds="true"/>
+
+    </LinearLayout>
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_list_nickname"
             android:paddingTop="4dp"
-            android:textSize="13dp"
+            android:textSize="10dp"
             android:textStyle="bold"
             android:textColor="@color/Grey900"
-            android:text="닉네임"
+            android:paddingLeft="10dp"
+            android:text="닉네임(abc@dongguk.edu)"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:maxLines="1"
             android:ellipsize="marquee"/>
-
     </LinearLayout>
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:background="@drawable/incoming"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:paddingTop="10dp"
+        android:layout_margin="3dp"
+        android:paddingTop="3dp"
         android:paddingLeft="30dp">
 
         <TextView
             android:text="hi"
-            android:textSize="16dp"
+            android:textSize="14dp"
             android:id="@+id/tv_list_msg"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+</LinearLayout>
+
 
 </LinearLayout>
