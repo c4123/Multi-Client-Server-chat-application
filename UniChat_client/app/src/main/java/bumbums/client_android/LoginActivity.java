@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               final String id = mEmail.getText().toString();
+                final String id = mEmail.getText().toString();
                 final String passwd = mPasswd.getText().toString();
 
                 new Thread(new Runnable() {
@@ -92,12 +92,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             @Override
             protected void onStartLoading() {
                 super.onStartLoading();
-                Log.d("#####","onstartLoding");
+                Log.d("#####", "onstartLoding");
             }
 
             @Override
             public Data loadInBackground() {
-                Log.d("#####","doinBack");
+                Log.d("#####", "doinBack");
                 mClient = new Client(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
@@ -114,11 +114,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     public void onLoadFinished(Loader<Data> loader, Data data) {
         //로딩창 사라지게 하기
         //데이터 확인해서 처리하기.
-        Log.d("#####","들어온데이터"+data.getMsg());
-/*        if(data.getMsg().equals(Constants.LOGIN_SUCCESS)){
-            Intent i = new Intent(getBaseContext(),MainActivity.class);
-            startActivity(i);
-        }*/
+        if (data != null) {
+            Log.d("#####", "들어온데이터" + data.getMsg());
+            if (data.getMsg().equals(Constants.LOGIN_SUCCESS)) {
+                Intent i = new Intent(getBaseContext(), MainActivity.class);;
+                startActivity(i);
+
+            }
+            else if(data.getMsg().equals(Constants.LOGIN_FAILED)){
+
+            }
+        }
     }
 
     @Override

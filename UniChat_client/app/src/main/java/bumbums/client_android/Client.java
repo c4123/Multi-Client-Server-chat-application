@@ -60,7 +60,6 @@ public class Client {
     public void stopClient() {
         mRun = false;
     }
-
     public void run() {
 
         mRun = true;
