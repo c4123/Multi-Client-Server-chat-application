@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
 
+
     android:orientation="horizontal">
     <LinearLayout
         android:layout_width="100dp"
@@ -13,8 +14,8 @@
         <ImageView
             android:id="@+id/iv_list_profile"
             android:src="@drawable/default_user1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:adjustViewBounds="true"/>
         <TextView
             android:id="@+id/tv_list_nickname"
@@ -41,7 +42,7 @@
 
         <TextView
             android:text="hi"
-            android:textSize="18dp"
+            android:textSize="16dp"
             android:id="@+id/tv_list_msg"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

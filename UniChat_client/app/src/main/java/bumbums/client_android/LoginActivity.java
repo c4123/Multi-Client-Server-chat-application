@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         final LoaderManager loaderManager = getSupportLoaderManager();
         final Loader<Data> loginLoader = loaderManager.getLoader(LOGIN_LOADER);
 
+        mClient = Client.getInstance();
 
         //서버 접속
         mServerBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             @Override
             public Data loadInBackground() {
                 Log.d("#####", "doinBack");
-                mClient = new Client(new Client.OnMessageReceived() {
+                mClient.setListener(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
                         deliverResult(data);
@@ -112,12 +113,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
     @Override
     public void onLoadFinished(Loader<Data> loader, Data data) {
-        //로딩창 사라지게 하기
-        //데이터 확인해서 처리하기.
         if (data != null) {
             Log.d("#####", "들어온데이터" + data.getMsg());
             if (data.getMsg().equals(Constants.LOGIN_SUCCESS)) {
-                Intent i = new Intent(getBaseContext(), MainActivity.class);;
+                Intent i = new Intent(getBaseContext(), ChatActivity.class);;
                 startActivity(i);
 
             }

@@ -56,13 +56,14 @@
 
         <EditText
             android:id="@+id/et_ipaddress"
-            android:text="192.168.43.89"
+            android:text="192.168.0.10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:hint="IP Address" />
 
         <EditText
+            android:text="niutn@naver.com"
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

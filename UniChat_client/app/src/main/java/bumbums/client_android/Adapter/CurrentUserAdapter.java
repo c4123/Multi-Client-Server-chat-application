@@ -20,6 +20,9 @@ public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.
 
     private ArrayList<User> currentUser;
 
+    public CurrentUserAdapter(ArrayList<User> currentUser){
+        this.currentUser = currentUser;
+    }
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -39,10 +42,12 @@ public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.
 
     @Override
     public int getItemCount() {
-        return currentUser.size();
+        if(currentUser==null)return 0;
+        else
+            return currentUser.size();
     }
 
-    void swapData(ArrayList<User> currentUser){
+    public void swapData(ArrayList<User> currentUser){
         this.currentUser = currentUser;
         notifyDataSetChanged();
     }
