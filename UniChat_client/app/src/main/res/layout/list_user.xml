@@ -29,7 +29,7 @@
 
         <TextView
         android:id="@+id/tv_row_grid_name"
-        android:paddingTop="4dp"
+
         android:textSize="13dp"
         android:textStyle="bold"
         android:textColor="@color/Grey900"
@@ -42,9 +42,7 @@
         />
         <TextView
             android:id="@+id/tv_row_grid_email"
-            android:paddingTop="4dp"
             android:textSize="8dp"
-
             android:textColor="@color/Grey900"
             android:text="abc@dongguk.edu"
             android:layout_width="wrap_content"

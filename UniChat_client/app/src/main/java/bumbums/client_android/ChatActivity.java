@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             loaderManager.restartLoader(CHAT_LOADER, null, this);
         }
+        Toast.makeText(this,getString(R.string.input_nickname),Toast.LENGTH_SHORT).show();
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +149,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             public void run() {
                 mChatDatas.add(data);
                 mChatViewAdapter.notifyDataSetChanged();
+                mChatView.smoothScrollToPosition(mChatDatas.size()-1);
             }
         });
     }
@@ -158,6 +161,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 mCurrentUser.clear();
                 mCurrentUser.addAll(currentUser);
                 mCurrentUserAdapter.notifyDataSetChanged();
+                mCurrentUserView.smoothScrollToPosition(currentUser.size()-1);
             }
         });
 
