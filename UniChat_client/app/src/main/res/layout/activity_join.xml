@@ -1,112 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+  >
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="250dp"
+        android:layout_height="70dp"
+        android:background="@color/material_teal"
+        >
+        <TextView
+            android:text="회원가입"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:hint="이메일 주소" />
-
+            android:paddingLeft="4dp"/>
+ </android.support.v7.widget.Toolbar>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="이메일 주소" />
+
+
+                <EditText
+                    android:id="@+id/et_passwd"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="비밀번호"
+                    android:inputType="textPassword" />
+
+                <EditText
+                    android:id="@+id/et_passwdconfirm"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:hint="비밀번호 확인"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+                <CheckBox
+                    android:id="@+id/cb_agree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  이용약관에 동의합니다." />
+
+                <CheckBox
+                    android:id="@+id/cb_agree2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  개인정보 취급방침에 동의합니다." />
+            </LinearLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:visibility="invisible"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/tv_warning"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="안내메시지"
+                    />
+
+            </FrameLayout>
 
             <Button
-                android:id="@+id/btn_overlap"
-                android:layout_width="60dp"
+                android:id="@+id/btn_join"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#559cff"
-                android:layout_marginLeft="60dp"
-                android:text="중복확인"
-                android:textColor="#FFFFFFFF" />
+                android:background="@color/material_teal"
+                android:text="회원가입"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="30dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/et_passwd"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_margin="15dp"
-        android:hint="비밀번호"
-        android:password="true"/>
-
-    <EditText
-        android:id="@+id/et_passwdconfirm"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:layout_margin="15dp"
-        android:password="true"
-        android:hint="비밀번호 확인" />
-
-    <Button
-        android:id="@+id/btn_certification"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_margin="10dp"
-        android:background="#559cff"
-        android:text="인증하기"
-        android:textColor="#FFFFFFFF" />
-
-    <CheckBox
-        android:id="@+id/cb_agree"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="  이용약관에 동의합니다." />
-
-    <CheckBox
-        android:id="@+id/cb_agree2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="  개인정보 취급방침에 동의합니다." />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="2">
 
 
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_join"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#FF02AB65"
-        android:text="회원가입"
-        android:textColor="#FFFFFF" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="30dp"
-        android:layout_weight="3"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_warning"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_gravity="center"/>
 
 </LinearLayout>

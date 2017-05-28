@@ -105,11 +105,6 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             protected void onStartLoading() {
                 super.onStartLoading();
                 Log.d("#####","onstartLoding");
-            }
-
-            @Override
-            public Data loadInBackground() {
-                Log.d("#####","doinBack");
                 mClient.setListener(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
@@ -117,6 +112,11 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                     }
                 });
 
+            }
+    //TODO 나갔을 때 처리
+            @Override
+            public Data loadInBackground() {
+                Log.d("#####","doinBack");
                 return null;
             }
         };

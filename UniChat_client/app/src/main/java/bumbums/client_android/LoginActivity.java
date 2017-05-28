@@ -80,21 +80,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
-       /* mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
-                alert.setPositiveButton("FAILED",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.setMessage("회원정보가 없습니다!");
-                alert.show();
-            }
-        });
-       */
 
         mJoinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,17 +99,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             protected void onStartLoading() {
                 super.onStartLoading();
                 Log.d("#####", "onstartLoding");
-            }
-
-            @Override
-            public Data loadInBackground() {
-                Log.d("#####", "doinBack");
                 mClient.setListener(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
                         deliverResult(data);
                     }
                 });
+            }
+
+            @Override
+            public Data loadInBackground() {
+                Log.d("#####", "doinBack");
                 mClient.run();
                 return null;
             }
