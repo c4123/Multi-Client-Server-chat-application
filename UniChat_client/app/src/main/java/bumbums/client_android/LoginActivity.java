@@ -1,9 +1,11 @@
 package bumbums.client_android;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,6 +60,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
+
+
         //로그인
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +79,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
 
             }
         });
+
+       /* mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                alert.setPositiveButton("FAILED",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.setMessage("회원정보가 없습니다!");
+                alert.show();
+            }
+        });
+       */
 
         mJoinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +145,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         }
     }
+
+
 
     @Override
     public void onLoaderReset(Loader<Data> loader) {
