@@ -8,7 +8,12 @@ public class Constants {
 	public static final String LOGIN_FAILED = "loginFail";
 	public static final String REGISTER_SUCCESS = "registerSuccess";
 	public static final String REGISTER_FAIL_ID= "registerFailIdExist";
-	public static final String REGISTER_FAIL_PASSWD= "registerFailPasswdDif";
+	public static final String REGISTER_WAITING_AUTHCODE="waitingAuthCode";
+	public static final String REGISTER_FAIL_AUTHCODE= "registerFailIdAuthCode";
+	public static final String REGISTER_CANCEL = "registerCancel";
+
+
+
 	
 	//for just data
 	public static final int TYPE_MSG = 0;

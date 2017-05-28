@@ -63,14 +63,52 @@ public class clientThread extends Thread {
 				DBHelper.getConnection();
 				LoginData data = (LoginData)is.readObject();
 				String id = data.getId();
-				System.out.println(id+" 로그인 시도");
 				int dataType = data.getType();
 				if(dataType == Constants.TYPE_REGISTER) {
+					System.out.println(id+" 회원가입 시도");
+					//회원가입 진행
+					
+					String authCode = Utils.generateNumber(6);	//6자리 인증코드 만들기
+					if(DBHelper.getIdCheck(data.getId())){
+						//ID가 존재하면
+						System.out.println("아이디 없음");
+						serverMsg(Constants.REGISTER_FAIL_ID);
+					}
+					else{
+						//ID가 존재하지 않으면
+						System.out.println("인증메일 보내는 중");
+						Utils.sendMail(data.getId(), authCode); //인증메일 보내기
+						serverMsg(Constants.REGISTER_WAITING_AUTHCODE);
+						
+						//여기에 무한정 기다리게 할 수 없으니 타이머 추가해야할거 같은데.
+						String msgFromClient =((Data)is.readObject()).getMsg(); //클라이언트가 보내온 인증코드.
+						
+						 //인증코드 일치할때
+						if(msgFromClient.equals(Constants.REGISTER_CANCEL)){
+							//사용자가 취소를 누른 상황이면
+							System.out.println("회원 인증 취소");
+							continue;//while문으로 돌아간다.
+						}
+						else{
+							 if(msgFromClient.equals(authCode)){
+								//회원가입 진행
+									DBHelper.insertUser(data.getId(), data.getPasswd());
+									serverMsg(Constants.REGISTER_SUCCESS);
+							 }
+							 else{
+								 //회원가입 실패
+								 serverMsg(Constants.REGISTER_FAIL_AUTHCODE);
+							 }
+							
+						}
+
+					}
+				
 					
 				}
 				else if(dataType == Constants.TYPE_LOGIN) {
 					boolean found = DBHelper.getIdCheck(id);
-					
+					System.out.println(id+" 로그인 시도");
 					if(found) {
 						loginSuccess = true;
 						serverMsg(Constants.LOGIN_SUCCESS);
