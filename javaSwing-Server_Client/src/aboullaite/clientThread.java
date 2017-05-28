@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 /**
  *
  * @author mohammed
@@ -55,7 +56,6 @@ public class clientThread extends Thread {
 			
 			is = new ObjectInputStream(clientSocket.getInputStream());
 			os = new ObjectOutputStream(clientSocket.getOutputStream());
-		
 			/*
 			 * Login Process 
 			 */
@@ -63,7 +63,7 @@ public class clientThread extends Thread {
 				DBHelper.getConnection();
 				LoginData data = (LoginData)is.readObject();
 				String id = data.getId();
-				System.out.println("dataid : "+id);
+				System.out.println(id+" 로그인 시도");
 				int dataType = data.getType();
 				if(dataType == Constants.TYPE_REGISTER) {
 					
@@ -87,10 +87,14 @@ public class clientThread extends Thread {
 				}
 			}
 			//로그인 성공한 것이므로  현재 CurrentUser에 지금 User추가하고 갱신된 리스트 뿌려주기
+		
 			MultiThreadChatServerSync.currentUser.add(user);
-			Data data= new Data(Constants.TYPE_USER_LIST, "", MultiThreadChatServerSync.currentUser);
+			ArrayList<User> nowCurrentUser= new ArrayList<>();
+			nowCurrentUser.addAll(MultiThreadChatServerSync.currentUser);
+			Data data= new Data(Constants.TYPE_USER_LIST, "", nowCurrentUser);
+			
 			synchronized (this) {
-				for(int i=0;i<maxClientsCount;i++){
+			for(int i=0;i<maxClientsCount;i++){
 					if (threads[i] != null && threads[i].loginSuccess) { //로그인 성공한 사람한테만 보여줌
 						threads[i].os.writeObject(data);
 						threads[i].os.flush();
@@ -107,6 +111,7 @@ public class clientThread extends Thread {
 					if (threads[i] != null && threads[i] != this && threads[i].loginSuccess) { //로그인 성공한 사람한테만 보여줌
 						String welcomeMsg = "*** A new user " +user.getId() + "("+user.getNickname()+") entered the chat room !!! ***";
 						Data welcomeData = new Data(Constants.TYPE_MSG,welcomeMsg,null);
+						welcomeData.setSendor("DonggukBot");
 						threads[i].os.writeObject(welcomeData);
 						threads[i].os.flush();
 					}

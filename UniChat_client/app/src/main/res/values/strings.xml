@@ -2,4 +2,6 @@
     <string name="app_name">MyChatApp</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Welcome to MyChatApp !!</string>
+    <string name="client_extra">client</string>
+    <string name="input_nickname">닉네임을 입력해주세요.</string>
 </resources>
