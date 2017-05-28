@@ -60,4 +60,32 @@ public class DBHelper {
 		   }
 		   return result;
 	   }
+	   
+	   public static boolean insertUser(String id, String passwd) {
+		   boolean result = false;
+		   
+		   try {
+			   conn = getConnection();
+			   ps = conn.prepareStatement("INSERT INTO user (id, passwd) values (?,?)");
+			   ps.setString(1, id);
+			   ps.setString(2, passwd);
+			   
+			   int r = ps.executeUpdate();
+			   
+			   if(r>0) {
+				   //»ğÀÔ ¼º°ø
+				   result = true;
+			   } else {
+				   //»ğÀÔ ½ÇÆĞ
+			   }
+		   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		   }
+		   return result;
+	   }
+	   
+	   public static void main(String[] args){
+		   DBHelper.insertUser("voool@naver.com", "1q2w3e4r!!");
+	   }
 }
