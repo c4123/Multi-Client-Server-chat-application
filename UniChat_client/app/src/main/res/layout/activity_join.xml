@@ -8,7 +8,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/material_teal"
+        android:background="@color/material_orange"
         >
         <TextView
             android:text="회원가입"
@@ -102,7 +102,7 @@
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@color/material_teal"
+                android:background="@color/material_amber"
                 android:text="회원가입"
                 android:textColor="@color/white" />
 

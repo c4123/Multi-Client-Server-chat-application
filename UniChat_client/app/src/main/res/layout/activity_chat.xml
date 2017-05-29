@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/material_teal"
+        android:background="@color/material_orange"
         >
         <TextView
             android:text="DONGGUK-CHAT"
@@ -84,7 +84,11 @@
           android:layout_height="match_parent"
           android:layout_weight="1"/>
       <Button
+          android:background="@color/material_amber"
           android:id="@+id/btn_send"
+          android:textColor="@color/white"
+          android:textStyle="bold"
+          android:layout_margin="5dp"
           android:text="전송"
           android:layout_width="70dp"
           android:layout_height="match_parent" />

@@ -8,7 +8,9 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +55,32 @@ public class JoinActivity extends AppCompatActivity implements LoaderManager.Loa
         cb_agree2 = (CheckBox) findViewById(R.id.cb_agree2);
         tv_warning = (TextView) findViewById(R.id.tv_warning);
         mLoadingBar = (ProgressBar)findViewById(R.id.pb_loading);
+
+
+        et_mail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString();
+                if(s.toString()!=null) {
+                    char last = str.charAt(str.length() - 1);
+                    if (last == '@') {
+                        et_mail.setText(str += "dongguk.edu");
+                        et_mail.setSelection(et_mail.length());
+                    }
+                }
+            }
+        });
+
 
         btn_join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +198,6 @@ public class JoinActivity extends AppCompatActivity implements LoaderManager.Loa
                 setWarningText( "가입이 완료되었습니다.");
                 finish();
             }
-
              offProgressBar();
         }
     }
@@ -189,7 +216,6 @@ public class JoinActivity extends AppCompatActivity implements LoaderManager.Loa
             public void run() {
                 if(mToast!=null)
                     mToast.cancel();
-
                 mToast = Toast.makeText(JoinActivity.this, str, Toast.LENGTH_LONG);
                 mToast.show();
                 tv_warning.setText(str);

@@ -59,6 +59,9 @@ public class clientThread extends Thread {
 			/*
 			 * Login Process 
 			 */
+			//서버에 접속되었다는 것을 클라이언트에게 알려줌
+			serverMsg(Constants.SERVER_CONNECTED);
+			
 			while (!loginSuccess) {
 				DBHelper.getConnection();
 				LoginData data = (LoginData)is.readObject();

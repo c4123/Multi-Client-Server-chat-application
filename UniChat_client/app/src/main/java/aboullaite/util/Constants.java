@@ -3,6 +3,7 @@ package aboullaite.util;
 
     public class Constants {
         //constants for login data
+        public static final String SERVER_CONNECTED = "serverConnected";
         public static final int TYPE_REGISTER=0;
         public static final int TYPE_LOGIN =1;
         public static final String LOGIN_SUCCESS = "loginSuccess";

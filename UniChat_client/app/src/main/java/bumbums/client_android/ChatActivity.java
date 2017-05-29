@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import aboullaite.Data;
 import aboullaite.User;
+import aboullaite.util.BackPressCloseHandler;
 import aboullaite.util.Constants;
 import bumbums.client_android.Adapter.ChatViewAdapter;
 import bumbums.client_android.Adapter.CurrentUserAdapter;
@@ -33,6 +34,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     private EditText mMsg;
     private ArrayList<Data> mChatDatas;
     private ArrayList<User> mCurrentUser;
+    private BackPressCloseHandler backPressCloseHandler;
 
     private final int CHAT_LOADER = 2;
     LoaderManager loaderManager = getSupportLoaderManager();
@@ -52,6 +54,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         mChatViewAdapter = new ChatViewAdapter(mChatDatas,new User(mClient.getEmail(),mClient.getNickname()));
         mSendBtn = (Button)findViewById(R.id.btn_send);
         mMsg = (EditText)findViewById(R.id.et_msg);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -166,6 +169,25 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
     }
+    public interface onKeyBackPressedListener {
+        public void onBack();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if(backPressCloseHandler.onBackPressed()){
+            //꺼졌을 때
+            //TODO 스레드로 처리하기
+            //mClient.stopClient();
+        }
+        else{
+
+        }
+
+    }
+
 
 
 }

@@ -8,10 +8,14 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import aboullaite.Data;
@@ -24,11 +28,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     private EditText mEmail;
     private EditText mPasswd;
     private EditText mServerIP;
+    private TextView mInfo;
     private Button mLoginBtn;
     private Button mJoinBtn;
     private Button mServerBtn;
+    private ProgressBar mLoadingBar;
     private final int LOGIN_LOADER = 1;
-
+    private boolean mIsServerConnected ;
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +44,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         mEmail = (EditText) findViewById(R.id.et_email);
         mPasswd = (EditText) findViewById(R.id.et_passwd);
         mServerIP = (EditText) findViewById(R.id.et_ipaddress);
+        mInfo = (TextView)findViewById(R.id.tv_info);
         mJoinBtn = (Button) findViewById(R.id.btn_join);
         mLoginBtn = (Button) findViewById(R.id.btn_login);
         mServerBtn = (Button) findViewById(R.id.btn_serverAccess);
-
+        mLoadingBar = (ProgressBar)findViewById(R.id.pb_loading);
         // connect to the server
         final LoaderManager loaderManager = getSupportLoaderManager();
         final Loader<Data> loginLoader = loaderManager.getLoader(LOGIN_LOADER);
 
         mClient = Client.getInstance();
-
+        mIsServerConnected = false;
         //서버 접속
         mServerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,22 +68,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
-
-
         //로그인
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String id = mEmail.getText().toString();
-                final String passwd = mPasswd.getText().toString();
+                if(mIsServerConnected) {
+                    final String id = mEmail.getText().toString();
+                    final String passwd = mPasswd.getText().toString();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        LoginData loginData = new LoginData(id, passwd, Constants.TYPE_LOGIN);
-                        mClient.sendMessage(loginData);
-                    }
-                }).start();
+                    mLoadingBar.setVisibility(View.VISIBLE);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            LoginData loginData = new LoginData(id, passwd, Constants.TYPE_LOGIN);
+                            mClient.sendMessage(loginData);
+                        }
+                    }).start();
+                }
+                else{
+                    mInfo.setText("서버를 먼저 연결해주세요");
+                }
 
             }
         });
@@ -86,6 +98,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
                 startActivity(intent);
+            }
+        });
+        mEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString();
+                if(s.toString()!=null) {
+                    char last = str.charAt(str.length() - 1);
+                    if (last == '@') {
+                        mEmail.setText(str += "dongguk.edu");
+                        mEmail.setSelection(mEmail.length());
+                    }
+                }
             }
         });
 
@@ -121,17 +156,43 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         if (data != null) {
             Log.d("#####", "들어온데이터" + data.getMsg());
             if (data.getMsg().equals(Constants.LOGIN_SUCCESS)) {
+                setWarningText("로그인 성공");
                 Intent i = new Intent(getBaseContext(), ChatActivity.class);;
                 startActivity(i);
-
+                offProgressBar();
             }
             else if(data.getMsg().equals(Constants.LOGIN_FAILED)){
-
+                setWarningText("로그인 실패");
+                offProgressBar();
+            }
+            else if(data.getMsg().equals(Constants.SERVER_CONNECTED)){
+                mIsServerConnected = true;
+                setWarningText("서버 접속 성공!!");
             }
         }
     }
 
+    public void offProgressBar(){
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mLoadingBar.setVisibility(View.INVISIBLE);
+            }
+        });
+    }
+    public void setWarningText(final String str) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(mToast!=null)
+                    mToast.cancel();
 
+                mToast = Toast.makeText(LoginActivity.this, str, Toast.LENGTH_LONG);
+                mToast.show();
+                mInfo.setText(str);
+            }
+        });
+    }
 
     @Override
     public void onLoaderReset(Loader<Data> loader) {
