@@ -16,64 +16,73 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import aboullaite.LoginData;
-import aboullaite.Constants;;
+import aboullaite.Constants;
+import aboullaite.Data;;
 public class MainController {
 	private Socket socket;
-    //private OutputStream outputStream;
     private ObjectOutputStream os;
     private ObjectInputStream is;
 	
 	@FXML
-	private Label lblstat;
+	private Label lblstat; //label state ex)failed, ok
 	@FXML
 	private TextField Username;
 	@FXML
 	private TextField pwd;
+	@FXML
+	private TextField ip;
 	@FXML
 	private Button Login;
 	@FXML
 	private Button Register;
 	
 	public void InitSocket(String server, int port) throws IOException {
-		try{
-			// TODO Auto-generated constructor stub
-			socket = new Socket(server, 2222);
-			//outputStream = socket.getOutputStream();
+		try {
+			socket = new Socket(server, port);
 			os = new ObjectOutputStream(socket.getOutputStream());
 			is = new ObjectInputStream(socket.getInputStream());
-		}catch(Exception e){}
+		} catch(Exception e) {
+			System.out.println("Connetion Failed");
+			System.out.println(server + " " + port);
+			e.printStackTrace();
+		}
 	}
 	
 	
-	public void Login(ActionEvent event) throws Exception{
+	public void Login(ActionEvent event) throws Exception {
+		String result = "";
 		Stage stage = null;
 		Parent newScene = null;
-		/*String id = Username.getText();
-		String pw = pwd.getText();
 		
-		LoginData loginData = new LoginData(id, pw, Constants.TYPE_LOGIN);
+		InitSocket(ip.getText(), 2222);
+		
+		LoginData loginData = new LoginData(Username.getText(), pwd.getText(), Constants.TYPE_LOGIN);
 		os.writeObject(loginData);
 		os.flush();
-		String result = is.readUTF();
-		System.out.println(result);*/
 		
-		if(Username.getText().equals("abc")){
-			lblstat.setText("OK");
-			stage = (Stage) Login.getScene().getWindow();
-			newScene = FXMLLoader.load(getClass().getResource("/application/Chat.fxml"));
-			Scene scene = new Scene(newScene,500,500);
-			Resize.addResizeListener(stage);
-			stage.setScene(scene);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.show();
-			stage.setTitle("Chat");		
+		try {
+			result = ((Data)is.readObject()).getMsg();
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
 		}
-		else{
+		
+		if(result.equals(Constants.LOGIN_FAILED)){
 			lblstat.setText("Failed");
-		
+			return;
 		}
+		
+		lblstat.setText("OK");
+		stage = (Stage) Login.getScene().getWindow();
+		newScene = FXMLLoader.load(getClass().getResource("/application/Chat.fxml"));
+		Scene scene = new Scene(newScene,500,500);
+		Resize.addResizeListener(stage);
+		stage.setScene(scene);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		stage.show();
+		stage.setTitle("Chat");	
 	}
-	public void Register(ActionEvent event) throws Exception{
+	
+	public void Register(ActionEvent event) throws Exception {
 		Stage stage = (Stage) Register.getScene().getWindow();
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Register.fxml"));
 		Scene scene = new Scene(root,300,500);
