@@ -44,17 +44,20 @@ public class DBHelper {
 		   }
 	   }
 	   
-	   public static boolean getIdCheck(String id) {
+	   public static boolean getUserCheck(String id, String passwd) {
 		   boolean result = false;
 		   
 		   try {
-			   ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+			   ps = conn.prepareStatement("SELECT * FROM user WHERE id=? AND passwd = PASSWORD(?)");
 			   ps.setString(1,  id.trim());
+			   ps.setString(2,  passwd.trim());
+			   
 			   rs = ps.executeQuery();
+			   
 			   if(rs.next())
 				   result = true;
 		   } catch(SQLException e) {
-			   
+			   e.printStackTrace();
 		   } finally {
 			   close();
 		   }
@@ -66,7 +69,7 @@ public class DBHelper {
 		   
 		   try {
 			   conn = getConnection();
-			   ps = conn.prepareStatement("INSERT INTO user (id, passwd) values (?,?)");
+			   ps = conn.prepareStatement("INSERT INTO user (id, passwd) values (?, PASSWORD(?))");
 			   ps.setString(1, id);
 			   ps.setString(2, passwd);
 			   
@@ -79,13 +82,19 @@ public class DBHelper {
 				   //삽입 실패
 			   }
 		   } catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		   } finally {
+			   close();
 		   }
 		   return result;
 	   }
-	   
-	   public static void main(String[] args){
-		   DBHelper.insertUser("voool@naver.com", "1q2w3e4r!!");
+	   public static void main(String[] args) {
+		   DBHelper.getConnection();
+		   boolean rs = DBHelper.getUserCheck("root@localhost", "1234");
+		   if(rs) {
+			   System.out.println("성공");
+		   } else {
+			   System.out.println("실패");
+		   }
 	   }
 }
