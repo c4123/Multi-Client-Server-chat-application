@@ -62,6 +62,8 @@ public class MainController {
 			stage = (Stage) Login.getScene().getWindow();
 			newScene = FXMLLoader.load(getClass().getResource("/application/Chat.fxml"));
 			Scene scene = new Scene(newScene,500,500);
+			stage.setResizable(true);
+			stage.centerOnScreen();
 			Resize.addResizeListener(stage);
 			stage.setScene(scene);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

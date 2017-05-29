@@ -5,18 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ChatController">
-   <children>
-      <GridPane layoutY="2.0" prefHeight="493.0" prefWidth="500.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="382.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="118.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="161.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="451.0" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+<BorderPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <GridPane prefHeight="493.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
             <Label contentDisplay="CENTER" prefHeight="23.0" prefWidth="382.0" text="  채팅중" />
             <Label alignment="CENTER" prefHeight="29.0" prefWidth="115.0" text="&lt;사용자 목록&gt;" textAlignment="CENTER" GridPane.columnIndex="1" />
@@ -29,6 +20,15 @@
             <TextField fx:id="messagebox" prefHeight="29.0" prefWidth="385.0" GridPane.rowIndex="2" />
             <ScrollPane hbarPolicy="NEVER" prefHeight="72.0" prefWidth="382.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="382.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="118.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="161.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="451.0" minHeight="10.0" prefHeight="440.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
+         </rowConstraints>
       </GridPane>
-   </children>
-</AnchorPane>
+   </top>
+</BorderPane>
