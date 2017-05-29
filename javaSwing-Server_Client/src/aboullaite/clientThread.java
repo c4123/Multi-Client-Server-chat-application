@@ -129,13 +129,12 @@ public class clientThread extends Thread {
 			}
 			//로그인 성공한 것이므로  현재 CurrentUser에 지금 User추가하고 갱신된 리스트 뿌려주기
 		
-			MultiThreadChatServerSync.currentUser.add(user);
-			ArrayList<User> nowCurrentUser= new ArrayList<>();
-			nowCurrentUser.addAll(MultiThreadChatServerSync.currentUser);
-			Data data= new Data(Constants.TYPE_USER_LIST, "", nowCurrentUser);
-			
 			synchronized (this) {
-			for(int i=0;i<maxClientsCount;i++){
+				MultiThreadChatServerSync.currentUser.add(user);
+				ArrayList<User> nowCurrentUser= new ArrayList<>();
+				nowCurrentUser.addAll(MultiThreadChatServerSync.currentUser);
+				Data data= new Data(Constants.TYPE_USER_LIST, "", nowCurrentUser);
+				for(int i=0;i<maxClientsCount;i++){
 					if (threads[i] != null && threads[i].loginSuccess) { //로그인 성공한 사람한테만 보여줌
 						threads[i].os.writeObject(data);
 						threads[i].os.flush();
@@ -145,7 +144,7 @@ public class clientThread extends Thread {
 			
 			//로그인  성공한 사람에 대한 환영메세지
 			/* Welcome the new the client. */
-			serverMsg("Welcome " + user.getId() + "("+user.getNickname()+") to our chat room.\nTo leave enter /quit in a new line.");
+			serverMsg("Welcome " + user.getId() + "("+user.getNickname()+") to our chat room.");
 			
 			synchronized (this) {
 				for (int i = 0; i < maxClientsCount; i++) {
@@ -195,6 +194,7 @@ public class clientThread extends Thread {
 						}
 					}
 					else if(type == Constants.TYPE_QUIT){
+						System.out.println(user.getId()+" QUIT 요청보냄");
 						loginSuccess = false;
 					}
 			}
@@ -208,6 +208,53 @@ public class clientThread extends Thread {
 			 * Close the output stream, close the input stream, close the
 			 * socket.
 			 */
+		      synchronized (this) {
+		          for (int i = 0; i < maxClientsCount; i++) {
+		            if (threads[i] != null && threads[i] != this
+		                && threads[i].clientName != null) {
+		            	Data data = new Data(Constants.TYPE_MSG,"*** The user " + user.getNickname()+"("
+				                 +user.getId() + ") is leaving the chat room !!! ***",null);
+		            	data.setSendor("DonggukBot");
+		              threads[i].os.writeObject(data);
+		              threads[i].os.flush();
+		            }
+		          }
+		        }
+		      
+
+		        /*
+		         * Clean up. Set the current thread variable to null so that a new client
+		         * could be accepted by the server.
+		         */
+		      
+		      //종료 과정 : 현재 스레드를 null로 만들어 준다.
+		        synchronized (this) {
+		          for (int i = 0; i < maxClientsCount; i++) {
+		            if (threads[i] == this) {
+		              threads[i] = null;
+		            }
+		          }
+		          
+		      //종료과정 2: currentUser 전역변수의 나 자신을 빼고, 반영된 currentUser를 모두에게 뿌려준다.  
+		          for(int i=0;i<MultiThreadChatServerSync.currentUser.size();i++)
+		          {
+		        	  if(MultiThreadChatServerSync.currentUser.get(i).getId().equals(user.getId())){
+		       
+		        		  MultiThreadChatServerSync.currentUser.remove(i); 	
+		    			  ArrayList<User> nowCurrentUser= new ArrayList<>();
+		    			  nowCurrentUser.addAll(MultiThreadChatServerSync.currentUser);
+		    			  Data data= new Data(Constants.TYPE_USER_LIST, "", nowCurrentUser);
+		    			  for(int j=0;j<maxClientsCount;i++){
+		    				  if (threads[j] != null && threads[j].loginSuccess) { //로그인 성공한 사람한테만 보여줌
+		    					  threads[j].os.writeObject(data);
+		    					  threads[j].os.flush();
+		    				  }
+		    			  }
+		    			  break;
+		        	  }
+		        	  
+		          }
+		        }
 			is.close();
 			os.close();
 			clientSocket.close();

@@ -37,9 +37,8 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     private BackPressCloseHandler backPressCloseHandler;
 
     private final int CHAT_LOADER = 2;
-    LoaderManager loaderManager = getSupportLoaderManager();
-    Loader<Data> loginLoader = loaderManager.getLoader(CHAT_LOADER);
-    private boolean isFirstInput = true;
+
+    private boolean isFirstInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +54,15 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         mSendBtn = (Button)findViewById(R.id.btn_send);
         mMsg = (EditText)findViewById(R.id.et_msg);
         backPressCloseHandler = new BackPressCloseHandler(this);
+        isFirstInput = true;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         setUpRecyclerView();
-        Intent intent = getIntent();
 
+        LoaderManager loaderManager = getSupportLoaderManager();
+        Loader<Data> loginLoader = loaderManager.getLoader(CHAT_LOADER);
         if (loginLoader == null) {
             loaderManager.initLoader(CHAT_LOADER, null, this).forceLoad();
         } else {
@@ -84,7 +85,6 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                         Data data = new Data(Constants.TYPE_MSG,msg,null);
                         data.setSendor(sendor);
                         mClient.sendMessage(data);
-
                     }
                 }).start();
                 mMsg.setText("");
@@ -107,7 +107,6 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             protected void onStartLoading() {
                 super.onStartLoading();
-                Log.d("#####","onstartLoding");
                 mClient.setListener(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
@@ -116,10 +115,8 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 });
 
             }
-    //TODO 나갔을 때 처리
             @Override
             public Data loadInBackground() {
-                Log.d("#####","doinBack");
                 return null;
             }
         };
@@ -169,25 +166,23 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
     }
-    public interface onKeyBackPressedListener {
-        public void onBack();
-    }
 
 
     @Override
     public void onBackPressed() {
 
-        if(backPressCloseHandler.onBackPressed()){
-            //꺼졌을 때
-            //TODO 스레드로 처리하기
-            //mClient.stopClient();
+        if(backPressCloseHandler.onBackPressed()){ //만약 두번 누른거라면
+            //클라이언트 종료
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mClient.stopClient();
+                }
+            }).start();
         }
         else{
 
         }
 
     }
-
-
-
 }

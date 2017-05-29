@@ -81,7 +81,8 @@ public class Client {
         try{
             Data data = new Data(Constants.TYPE_QUIT,"",null);
             os.writeObject(data);
-/*            is.close();
+            os.flush();
+  /*        is.close();
             os.close();
             socket.close();*/
         }catch (IOException e){
