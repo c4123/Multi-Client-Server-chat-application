@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -21,8 +22,8 @@ public class RegisterController{
 	@FXML private CheckBox Check1;
 	@FXML private CheckBox Check2;
 	@FXML private Label Regwarning;
-	@FXML private PasswordField pwd;
-	@FXML private PasswordField pwdconf;
+	@FXML private TextField pwd;
+	@FXML private TextField pwdconf;
 	
 	public void Regcl(ActionEvent event) throws Exception{
 		
