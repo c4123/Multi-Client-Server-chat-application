@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 import aboullaite.Data;
 import aboullaite.User;
+import aboullaite.util.BackPressCloseHandler;
 import aboullaite.util.Constants;
 import bumbums.client_android.Adapter.ChatViewAdapter;
 import bumbums.client_android.Adapter.CurrentUserAdapter;
@@ -33,11 +34,11 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     private EditText mMsg;
     private ArrayList<Data> mChatDatas;
     private ArrayList<User> mCurrentUser;
+    private BackPressCloseHandler backPressCloseHandler;
 
     private final int CHAT_LOADER = 2;
-    LoaderManager loaderManager = getSupportLoaderManager();
-    Loader<Data> loginLoader = loaderManager.getLoader(CHAT_LOADER);
-    private boolean isFirstInput = true;
+
+    private boolean isFirstInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +53,16 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         mChatViewAdapter = new ChatViewAdapter(mChatDatas,new User(mClient.getEmail(),mClient.getNickname()));
         mSendBtn = (Button)findViewById(R.id.btn_send);
         mMsg = (EditText)findViewById(R.id.et_msg);
+        backPressCloseHandler = new BackPressCloseHandler(this);
+        isFirstInput = true;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         setUpRecyclerView();
-        Intent intent = getIntent();
 
+        LoaderManager loaderManager = getSupportLoaderManager();
+        Loader<Data> loginLoader = loaderManager.getLoader(CHAT_LOADER);
         if (loginLoader == null) {
             loaderManager.initLoader(CHAT_LOADER, null, this).forceLoad();
         } else {
@@ -81,7 +85,6 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                         Data data = new Data(Constants.TYPE_MSG,msg,null);
                         data.setSendor(sendor);
                         mClient.sendMessage(data);
-
                     }
                 }).start();
                 mMsg.setText("");
@@ -104,12 +107,6 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             protected void onStartLoading() {
                 super.onStartLoading();
-                Log.d("#####","onstartLoding");
-            }
-
-            @Override
-            public Data loadInBackground() {
-                Log.d("#####","doinBack");
                 mClient.setListener(new Client.OnMessageReceived() {
                     @Override
                     public void messageReceived(Data data) {
@@ -117,6 +114,9 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                     }
                 });
 
+            }
+            @Override
+            public Data loadInBackground() {
                 return null;
             }
         };
@@ -168,4 +168,21 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
+    @Override
+    public void onBackPressed() {
+
+        if(backPressCloseHandler.onBackPressed()){ //만약 두번 누른거라면
+            //클라이언트 종료
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mClient.stopClient();
+                }
+            }).start();
+        }
+        else{
+
+        }
+
+    }
 }
