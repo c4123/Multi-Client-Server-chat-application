@@ -78,6 +78,16 @@ public class Client {
 
     public void stopClient() {
         mRun = false;
+        try{
+            Data data = new Data(Constants.TYPE_QUIT,"",null);
+            os.writeObject(data);
+            os.flush();
+  /*        is.close();
+            os.close();
+            socket.close();*/
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void run() {
