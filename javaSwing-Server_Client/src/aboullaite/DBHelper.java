@@ -44,6 +44,25 @@ public class DBHelper {
 		   }
 	   }
 	   
+	   public static boolean getIdCheck(String id) {
+		   boolean result = false;
+		   
+		   try {
+			   ps = conn.prepareStatement("SELECT * FROM user WHERE id=?");
+			   ps.setString(1,  id.trim());
+			   
+			   rs = ps.executeQuery();
+			   
+			   if(rs.next())
+				   result = true;
+		   } catch(SQLException e) {
+			   e.printStackTrace();
+		   } finally {
+			   close();
+		   }
+		   return result;
+	   }
+	   
 	   public static boolean getUserCheck(String id, String passwd) {
 		   boolean result = false;
 		   
@@ -92,9 +111,16 @@ public class DBHelper {
 		   DBHelper.getConnection();
 		   boolean rs = DBHelper.getUserCheck("root@localhost", "1234");
 		   if(rs) {
-			   System.out.println("성공");
+			   System.out.println("아이디 비번 일치");
 		   } else {
-			   System.out.println("실패");
+			   System.out.println("아이디 비번 불일치");
+		   }
+		   
+		   rs = DBHelper.getIdCheck("root@localhost");
+		   if(rs) {
+			   System.out.println("아이디 일치");
+		   } else {
+			   System.out.println("아이디 불일치");
 		   }
 	   }
 }
