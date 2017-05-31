@@ -7,7 +7,6 @@
 
     >
 
-
     <LinearLayout
         android:id="@+id/ll_friendreview"
         android:orientation="vertical"
@@ -20,7 +19,7 @@
         >
 
         <ImageView
-            android:id="@+id/iv_row_grid_profile"
+            android:id="@+id/iv_profile"
             android:src="@drawable/default_user1"
             android:layout_width="50dp"
             android:layout_height="50dp"

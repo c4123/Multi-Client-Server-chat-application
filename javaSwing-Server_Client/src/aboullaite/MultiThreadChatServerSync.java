@@ -40,6 +40,21 @@ public class MultiThreadChatServerSync {
      */
     try {
       serverSocket = new ServerSocket(portNumber);
+     new Thread(new Runnable() {
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			 DonggukBot donggukBot = new DonggukBot();
+		     try {
+				donggukBot.InitSocket("127.0.0.1", 2222);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		   
+		}
+	}).start();
     } catch (IOException e) {
       System.out.println(e);
     }

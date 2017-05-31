@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -55,15 +56,20 @@ public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.
     class UserViewHolder extends RecyclerView.ViewHolder{
         TextView nickname;
         TextView email;
+        ImageView photo;
         public UserViewHolder(View itemView) {
             super(itemView);
             nickname = (TextView)itemView.findViewById(R.id.tv_row_grid_name);
             email = (TextView)itemView.findViewById(R.id.tv_row_grid_email);
+            photo = (ImageView)itemView.findViewById(R.id.iv_profile);
         }
         void bind(int listIndex){
             User user = currentUser.get(listIndex);
             nickname.setText(user.getNickname());
             email.setText(user.getId());
+            if(nickname.getText().equals("DonggukBot")){
+                photo.setImageResource(R.drawable.ic_donggukbot);
+            }
         }
 
     }

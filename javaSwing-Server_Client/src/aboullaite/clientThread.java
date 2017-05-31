@@ -110,7 +110,7 @@ public class clientThread extends Thread {
 					
 				}
 				else if(dataType == Constants.TYPE_LOGIN) {
-					boolean found = DBHelper.getIdCheck(id);
+					boolean found = DBHelper.getUserCheck(data.getId(), data.getPasswd());
 					System.out.println(id+" 로그인 시도");
 					if(found) {
 						loginSuccess = true;
@@ -244,7 +244,7 @@ public class clientThread extends Thread {
 		    			  ArrayList<User> nowCurrentUser= new ArrayList<>();
 		    			  nowCurrentUser.addAll(MultiThreadChatServerSync.currentUser);
 		    			  Data data= new Data(Constants.TYPE_USER_LIST, "", nowCurrentUser);
-		    			  for(int j=0;j<maxClientsCount;i++){
+		    			  for(int j=0;j<maxClientsCount;j++){
 		    				  if (threads[j] != null && threads[j].loginSuccess) { //로그인 성공한 사람한테만 보여줌
 		    					  threads[j].os.writeObject(data);
 		    					  threads[j].os.flush();
