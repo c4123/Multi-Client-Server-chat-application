@@ -20,7 +20,7 @@
          <children>
             <Label contentDisplay="CENTER" prefHeight="23.0" prefWidth="382.0" text="  채팅중" />
             <Label alignment="CENTER" prefHeight="29.0" prefWidth="115.0" text="&lt;사용자 목록&gt;" textAlignment="CENTER" GridPane.columnIndex="1" />
-            <Button fx:id="msgsend" alignment="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="115.0" text="전송" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="msgsend" alignment="CENTER" mnemonicParsing="false" onAction="#sendButtonAction" prefHeight="29.0" prefWidth="115.0" text="전송" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ScrollPane hbarPolicy="NEVER" prefHeight="437.0" prefWidth="384.0" vbarPolicy="ALWAYS" GridPane.rowIndex="1">
                <content>
                   <ListView fx:id="chatscreen" prefHeight="445.0" prefWidth="367.0" />
