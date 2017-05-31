@@ -73,7 +73,7 @@ public class MainController {
 		
 		lblstat.setText("OK");
 		stage = (Stage) Login.getScene().getWindow();
-		newScene = FXMLLoader.load(getClass().getResource("/application/Chat.fxml"));
+		newScene = FXMLLoader.load(getClass().getResource("/application/ChatView.fxml"));
 		Scene scene = new Scene(newScene,500,500);
 		Resize.addResizeListener(stage);
 		stage.setScene(scene);
