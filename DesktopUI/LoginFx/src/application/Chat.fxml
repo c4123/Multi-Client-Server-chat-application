@@ -20,14 +20,14 @@
          <children>
             <Label contentDisplay="CENTER" prefHeight="23.0" prefWidth="382.0" text="  채팅중" />
             <Label alignment="CENTER" prefHeight="29.0" prefWidth="115.0" text="&lt;사용자 목록&gt;" textAlignment="CENTER" GridPane.columnIndex="1" />
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="115.0" text="전송" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="msgsend" alignment="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="115.0" text="전송" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ScrollPane hbarPolicy="NEVER" prefHeight="437.0" prefWidth="384.0" vbarPolicy="ALWAYS" GridPane.rowIndex="1">
                <content>
-                  <ListView prefHeight="445.0" prefWidth="367.0" />
+                  <ListView fx:id="chatscreen" prefHeight="445.0" prefWidth="367.0" />
                </content>
             </ScrollPane>
             <TextField fx:id="messagebox" prefHeight="29.0" prefWidth="385.0" GridPane.rowIndex="2" />
-            <ScrollPane hbarPolicy="NEVER" prefHeight="72.0" prefWidth="382.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ScrollPane fx:id="userlist" hbarPolicy="NEVER" prefHeight="72.0" prefWidth="382.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
