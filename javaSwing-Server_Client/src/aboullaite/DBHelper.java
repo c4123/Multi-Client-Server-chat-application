@@ -1,5 +1,6 @@
 package aboullaite;
 import java.sql.*;
+import java.util.HashMap;
 
 public class DBHelper {
 	   private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
@@ -82,6 +83,29 @@ public class DBHelper {
 		   }
 		   return result;
 	   }
+	   
+	   public static HashMap<String, String> getQuiz() {
+		   HashMap<String, String> quiz = new HashMap<String, String>();
+		   
+		   try {
+			   conn = getConnection();	
+			   ps = conn.prepareStatement("SELECT question, answer FROM quiz");
+		
+			   rs = ps.executeQuery();
+			   
+			   while(rs.next()) {
+				   String question = rs.getString("qeusstion");				
+				   String answer = rs.getString("answer");				
+				   quiz.put(question, answer);			
+			   }
+			   
+		   } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		   }
+		   
+		   return quiz;
+		}
 	   
 	   public static boolean insertUser(String id, String passwd) {
 		   boolean result = false;
