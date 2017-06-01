@@ -14,12 +14,14 @@ public class Constants {
 	public static final String REGISTER_CANCEL = "registerCancel";
 
 
-
-	
 	//for just data
 	public static final int TYPE_MSG = 0;
 	public static final int TYPE_WHISPER = 1;
 	public static final int TYPE_USER_LIST = 2;
 	public static final int TYPE_QUIT = 3;
+	public static final int TYPE_NOTIFICATION = 4;
+	
+	//for just DONGGUK bot
+	public static final String DonggukBotName = "DonggukBot";
 	
 }

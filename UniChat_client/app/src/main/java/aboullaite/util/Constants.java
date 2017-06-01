@@ -19,5 +19,6 @@ package aboullaite.util;
         public static final int TYPE_WHISPER = 1;
         public static final int TYPE_USER_LIST = 2;
         public static final int TYPE_QUIT = 3;
+        public static final int TYPE_NOTIFICATION = 4;
 
     }
