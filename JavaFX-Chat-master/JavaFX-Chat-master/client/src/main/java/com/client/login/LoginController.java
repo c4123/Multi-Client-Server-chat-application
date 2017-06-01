@@ -9,6 +9,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -93,6 +94,13 @@ public class LoginController implements Initializable {
             con.setImageLabel(selectedPicture.getText());
         });
     }
+    public void Register(ActionEvent event) throws Exception {
+
+        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
+        Parent window = (Pane) fmxlLoader.load();
+        con = fmxlLoader.<ChatController>getController();
+        this.scene = new Scene(window);
+	}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
