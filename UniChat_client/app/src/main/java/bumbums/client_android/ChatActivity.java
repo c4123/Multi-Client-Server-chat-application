@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     private ChatViewAdapter mChatViewAdapter;
     private Button mSendBtn;
     private EditText mMsg;
+    private LinearLayout mNotification;
+    private ImageView mNotiDelBtn;
+    private TextView mNotiTextView;
     private ArrayList<Data> mChatDatas;
     private ArrayList<User> mCurrentUser;
     private BackPressCloseHandler backPressCloseHandler;
@@ -53,6 +59,10 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         mChatViewAdapter = new ChatViewAdapter(mChatDatas,new User(mClient.getEmail(),mClient.getNickname()));
         mSendBtn = (Button)findViewById(R.id.btn_send);
         mMsg = (EditText)findViewById(R.id.et_msg);
+        mNotiTextView = (TextView)findViewById(R.id.tv_noti);
+        mNotification  =(LinearLayout)findViewById(R.id.ll_noti);
+        mNotiDelBtn = (ImageView)findViewById(R.id.iv_del);
+
         backPressCloseHandler = new BackPressCloseHandler(this);
         isFirstInput = true;
 
@@ -88,6 +98,12 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                     }
                 }).start();
                 mMsg.setText("");
+            }
+        });
+        mNotiDelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mNotification.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -134,6 +150,10 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.d("#####UPDATER",data.toString());
                 updateUser(data.getUserList());
             }
+            else if(type ==Constants.TYPE_NOTIFICATION){
+                Log.d("#####NOTI",data.toString());
+                updateNoti(data.getMsg());
+            }
 
         }
     }
@@ -142,6 +162,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<Data> loader) {
 
     }
+
 
     public void updateMsg(final Data data){
         ((ChatActivity) this).runOnUiThread(new Runnable() {
@@ -165,6 +186,17 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+    }
+
+    public void updateNoti(final String text){
+        ((ChatActivity)this).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mNotiTextView.setText(text);
+                mNotification.setVisibility(View.VISIBLE);
+
+            }
+        });
     }
 
 
