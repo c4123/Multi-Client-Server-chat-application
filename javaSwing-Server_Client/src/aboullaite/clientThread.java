@@ -35,7 +35,8 @@ public class clientThread extends Thread {
 
 	public void serverMsg(String text){
 		Data msgData = new Data(Constants.TYPE_MSG,text,null);
-		msgData.setSendor(Constants.DonggukBotName);
+		msgData.setSendorEmail(Constants.DonggukBotEmail);
+		msgData.setSendorNickName(Constants.DonggukBotName);
 		try {
 			os.writeObject(msgData);
 			os.flush();
@@ -151,7 +152,8 @@ public class clientThread extends Thread {
 					if (threads[i] != null && threads[i] != this && threads[i].loginSuccess) { //로그인 성공한 사람한테만 보여줌
 						String welcomeMsg = "*** A new user " +user.getId() + "("+user.getNickname()+") entered the chat room !!! ***";
 						Data welcomeData = new Data(Constants.TYPE_MSG,welcomeMsg,null);
-						welcomeData.setSendor(Constants.DonggukBotName);
+						welcomeData.setSendorEmail(Constants.DonggukBotEmail);
+						welcomeData.setSendorNickName(Constants.DonggukBotName);
 						threads[i].os.writeObject(welcomeData);
 						threads[i].os.flush();
 					}
@@ -163,7 +165,8 @@ public class clientThread extends Thread {
 					//클라이언트의 작은 서버가 클라로부터 data받았을때 처리 루틴
 					Data receiveData = (Data)is.readObject();
 					int type = receiveData.getType();
-					receiveData.setSendor(clientName);
+					receiveData.setSendorEmail(user.getId());
+					receiveData.setSendorNickName(user.getNickname());
 					//보내는 사람을 현재 계정으로 설정 
 					
 					//일반 메시지 타입이나, 공지사항 갱신 요청일 경우 모두에게 보낸다.
@@ -181,7 +184,7 @@ public class clientThread extends Thread {
 						synchronized (this) {
 							for (int i = 0; i < maxClientsCount; i++) {
 								if (threads[i] != null && threads[i] != this && threads[i].clientName != null
-										&& threads[i].clientName.equals(receiveData.getReceiver()) && threads[i].loginSuccess) {
+										&& threads[i].user.getId().equals(receiveData.getReceiverEmail()) && threads[i].loginSuccess) {
 									threads[i].os.writeObject(receiveData);
 									threads[i].os.flush();
 							
@@ -215,7 +218,8 @@ public class clientThread extends Thread {
 		                && threads[i].clientName != null) {
 		            	Data data = new Data(Constants.TYPE_MSG,"*** The user " + user.getNickname()+"("
 				                 +user.getId() + ") is leaving the chat room !!! ***",null);
-		            	data.setSendor(Constants.DonggukBotName);
+		            	data.setSendorEmail(Constants.DonggukBotEmail);
+		            	data.setSendorNickName(Constants.DonggukBotName);
 		              threads[i].os.writeObject(data);
 		              threads[i].os.flush();
 		            }

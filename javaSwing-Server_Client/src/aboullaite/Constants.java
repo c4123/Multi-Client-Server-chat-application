@@ -23,5 +23,6 @@ public class Constants {
 	
 	//for just DONGGUK bot
 	public static final String DonggukBotName = "DonggukBot";
+	public static final String DonggukBotEmail = "DONGGUKBOT";
 	
 }

@@ -55,19 +55,19 @@ public class DonggukBot {
                 	Data data ;
                 	 while ((data = (Data)is.readObject()) != null){
                 			if(data.getType()==Constants.TYPE_MSG){     	
-                				System.out.println("[[[동국봇]]] <"+data.getSendor()+">"+data.getMsg());   
+                				System.out.println("[[[동국봇]]] <"+data.getSendorEmail()+">"+data.getMsg());   
                 				if(donggukQuizTimer.getQuizStart()){ //퀴즈 진행중이면
                 					if(data.getMsg().equals(donggukQuizTimer.nowAnswer)){
                 						//정답일 경우게만 
                 						donggukQuizTimer.setQuizStart(false);
-                						donggukQuizTimer.setLastAnswerNickName(data.getSendor());
-                						sendMsg(data.getSendor()+"님이 정답을 맞추셨습니다! "+data.getSendor()+"님이 이후로 처음하시는 채팅은 공지사항으로 등록됩니다!");
+                						donggukQuizTimer.setLastAnswerEmail(data.getSendorEmail());
+                						sendMsg(data.getSendorNickName()+"님이 정답을 맞추셨습니다! "+data.getSendorNickName()+"님이 이후로 처음하시는 채팅은 공지사항으로 등록됩니다!");
                 						canNotification = true;
                 					}
                 				}
                 				else{
                 					if(canNotification){
-                						if(data.getSendor().equals(donggukQuizTimer.getLastAnswerNickName())){
+                						if(data.getSendorEmail().equals(donggukQuizTimer.getLastAnswerEmail())){
                 							canNotification = false;
                 							Data notiData = new Data(Constants.TYPE_NOTIFICATION,data.getMsg(),null);
                 							os.writeObject(notiData);
@@ -109,7 +109,9 @@ public class DonggukBot {
     }
     public void sendMsg(String quiz){
 		Data quizData = new Data(Constants.TYPE_MSG,quiz,null);
-		quizData.setSendor(Constants.DonggukBotName);
+		quizData.setSendorEmail(Constants.DonggukBotEmail);
+		quizData.setSendorNickName(Constants.DonggukBotName);
+		
 		try {
 			os.writeObject(quizData);
 			os.flush();

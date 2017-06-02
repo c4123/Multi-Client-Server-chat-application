@@ -9,11 +9,11 @@ public class DonggukQuizTimer extends TimerTask {
 	 private String QuizAnswer[][];
 	 private DonggukBot mBot;
 	 private boolean quizStart;
-	 public String lastAnswerNickName;
+	 public String lastAnswerEmail;
 	 public DonggukQuizTimer(DonggukBot bot) {
 		 mBot = bot;
 		 quizStart = false;
-		 lastAnswerNickName="";
+		 lastAnswerEmail="";
 		// TODO Auto-generated constructor stub
 		 QuizAnswer = new String[10][2];
 		 for(int i=0;i<10;i++){
@@ -30,11 +30,11 @@ public class DonggukQuizTimer extends TimerTask {
 	 public void setQuizStart(boolean quizStart){
 		 this.quizStart = quizStart;
 	 }
-	 public String getLastAnswerNickName(){
-		 return lastAnswerNickName;
+	 public String getLastAnswerEmail(){
+		 return lastAnswerEmail;
 	 }
-	 public void setLastAnswerNickName(String lastAnswerNickName ){
-		 this.lastAnswerNickName = lastAnswerNickName;
+	 public void setLastAnswerEmail(String lastAnswerEmail ){
+		 this.lastAnswerEmail = lastAnswerEmail;
 	 }
 	@Override
 	public void run() {

@@ -6,8 +6,9 @@ import java.util.ArrayList;
 public class Data implements Serializable{
 	private int type; 
 	private String msg;
-	private String sendor;
-	private String receiver;
+	private String sendorEmail;
+	private String sendorNickName;
+	private String receiverEmail;
 	private ArrayList<User> userList;
 	
 	public Data(int type, String msg, ArrayList<User> userList) {
@@ -44,24 +45,7 @@ public class Data implements Serializable{
 	}
 
 
-	public String getSendor() {
-		return sendor;
-	}
 
-
-	public void setSendor(String sendor) {
-		this.sendor = sendor;
-	}
-
-
-	public String getReceiver() {
-		return receiver;
-	}
-
-
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
-	}
 
 
 	public ArrayList<User> getUserList() {
@@ -71,6 +55,36 @@ public class Data implements Serializable{
 
 	public void setUserList(ArrayList<User> userList) {
 		this.userList = userList;
+	}
+
+
+	public String getSendorEmail() {
+		return sendorEmail;
+	}
+
+
+	public void setSendorEmail(String sendorEmail) {
+		this.sendorEmail = sendorEmail;
+	}
+
+
+	public String getSendorNickName() {
+		return sendorNickName;
+	}
+
+
+	public void setSendorNickName(String sendorNickName) {
+		this.sendorNickName = sendorNickName;
+	}
+
+
+	public String getReceiverEmail() {
+		return receiverEmail;
+	}
+
+
+	public void setReceiverEmail(String receiverEmail) {
+		this.receiverEmail = receiverEmail;
 	}
 	
 	
