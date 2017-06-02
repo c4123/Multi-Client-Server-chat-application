@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import aboullaite.User;
+import aboullaite.util.Constants;
 import bumbums.client_android.R;
 
 /**
@@ -67,7 +68,7 @@ public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.
             User user = currentUser.get(listIndex);
             nickname.setText(user.getNickname());
             email.setText(user.getId());
-            if(nickname.getText().equals("DonggukBot")){
+            if(email.getText().equals(Constants.DonggukBotEmail)){
                 photo.setImageResource(R.drawable.ic_donggukbot);
             }
         }

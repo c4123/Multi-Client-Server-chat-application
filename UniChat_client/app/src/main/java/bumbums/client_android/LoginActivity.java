@@ -115,10 +115,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             public void afterTextChanged(Editable s) {
                 String str = s.toString();
                 if(s.toString()!=null) {
-                    char last = str.charAt(str.length() - 1);
-                    if (last == '@') {
-                        mEmail.setText(str += "dongguk.edu");
-                        mEmail.setSelection(mEmail.length());
+                    if(str.length()!=0) {
+                        char last = str.charAt(str.length() - 1);
+                        if (last == '@') {
+                            mEmail.setText(str += "dongguk.edu");
+                            mEmail.setSelection(mEmail.length());
+                        }
                     }
                 }
             }

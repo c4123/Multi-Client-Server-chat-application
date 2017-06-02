@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -59,11 +60,15 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Data data = chatDatas.get(position);
         if(itemType == ITEM_TYPE_INCOMING){
             ((InComingViewHolder)holder).msg.setText(data.getMsg());
-            ((InComingViewHolder)holder).nickname.setText(data.getSendor());
+            ((InComingViewHolder)holder).nickname.setText(data.getSendorNickName());
+            if(data.getSendorEmail().equals(Constants.DonggukBotEmail)){
+                ((InComingViewHolder)holder).photo.setImageResource(R.drawable.ic_donggukbot);
+            }
+
         }
         else if(itemType == ITEM_TYPE_OUTGOING){
             ((OutGoingViewHolder)holder).msg.setText(data.getMsg());
-            ((OutGoingViewHolder)holder).nickname.setText(data.getSendor());
+            ((OutGoingViewHolder)holder).nickname.setText(data.getSendorNickName());
         }
     }
 
@@ -78,11 +83,12 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public class InComingViewHolder extends RecyclerView.ViewHolder {
         TextView msg;
         TextView nickname;
-
+        ImageView photo;
         public InComingViewHolder(View itemVIew) {
             super(itemVIew);
             msg = (TextView) itemView.findViewById(R.id.tv_list_msg);
             nickname = (TextView) itemView.findViewById(R.id.tv_list_nickname);
+            photo = (ImageView)itemView.findViewById(R.id.iv_list_profile);
         }
     }
     public class OutGoingViewHolder extends RecyclerView.ViewHolder {
@@ -93,17 +99,18 @@ public class ChatViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(itemVIew);
             msg = (TextView) itemView.findViewById(R.id.tv_list_msg);
             nickname = (TextView) itemView.findViewById(R.id.tv_list_nickname);
+
         }
     }
     @Override
     public int getItemViewType(int position) {
         int type = chatDatas.get(position).getType() ;
-       String sendor =  chatDatas.get(position).getSendor() ;
+       String getSendorEmail =  chatDatas.get(position).getSendorEmail() ;
 
         if(type == Constants.TYPE_MSG){
-            if(sendor==null)return ITEM_TYPE_INCOMING;
+            if(getSendorEmail==null)return ITEM_TYPE_INCOMING;
             
-            if(sendor.equals(Client.nickname))return ITEM_TYPE_OUTGOING;
+            if(getSendorEmail.equals(Client.email))return ITEM_TYPE_OUTGOING;
             else return ITEM_TYPE_INCOMING;
         }
         else if( type == Constants.TYPE_WHISPER){

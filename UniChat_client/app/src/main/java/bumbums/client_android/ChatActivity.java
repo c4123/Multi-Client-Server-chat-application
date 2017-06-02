@@ -93,7 +93,8 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                         }
                         String sendor = mClient.getNickname();
                         Data data = new Data(Constants.TYPE_MSG,msg,null);
-                        data.setSendor(sendor);
+                        data.setSendorEmail(mClient.getEmail());
+                        data.setSendorNickName(mClient.getNickname());
                         mClient.sendMessage(data);
                     }
                 }).start();
