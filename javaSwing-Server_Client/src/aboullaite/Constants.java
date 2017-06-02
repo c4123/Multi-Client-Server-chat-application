@@ -12,6 +12,7 @@ public class Constants {
 	public static final String REGISTER_WAITING_AUTHCODE="waitingAuthCode";
 	public static final String REGISTER_FAIL_AUTHCODE= "registerFailIdAuthCode";
 	public static final String REGISTER_CANCEL = "registerCancel";
+	public static final String REGISTER_TIME_EXCEEDED = "registerTimeExceeded";
 
 
 	//for just data

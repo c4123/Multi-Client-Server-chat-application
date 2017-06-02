@@ -79,6 +79,9 @@ public class clientThread extends Thread {
 						serverMsg(Constants.REGISTER_FAIL_ID);
 					}
 					else{
+						long start = System.currentTimeMillis();
+						long end;
+						long time;
 						//ID가 존재하지 않으면
 						System.out.println("인증메일 보내는 중");
 						Utils.sendMail(data.getId(), authCode); //인증메일 보내기
@@ -86,9 +89,16 @@ public class clientThread extends Thread {
 						
 						//여기에 무한정 기다리게 할 수 없으니 타이머 추가해야할거 같은데.
 						String msgFromClient =((Data)is.readObject()).getMsg(); //클라이언트가 보내온 인증코드.
+						end = System.currentTimeMillis();
+						time = end - start;
 						
-						 //인증코드 일치할때
-						if(msgFromClient.equals(Constants.REGISTER_CANCEL)){
+						//1000 = 1초, 60000 = 60초/1분, 180000 = 3분
+						if (end > 180000) {
+							System.out.println("시간 초과");
+							serverMsg(Constants.REGISTER_TIME_EXCEEDED);
+						}
+						//인증코드 일치할때
+						else if(msgFromClient.equals(Constants.REGISTER_CANCEL)){
 							//사용자가 취소를 누른 상황이면
 							System.out.println("회원 인증 취소");
 							continue;//while문으로 돌아간다.
