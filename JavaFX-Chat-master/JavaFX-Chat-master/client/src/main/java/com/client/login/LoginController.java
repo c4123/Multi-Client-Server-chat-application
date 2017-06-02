@@ -44,6 +44,7 @@ public class LoginController implements Initializable {
     @FXML private ChoiceBox imagePicker;
     @FXML private Label selectedPicture;
     public static ChatController con;
+    public static RegisterController RegCon;
     @FXML private BorderPane borderPane;
     private double xOffset;
     private double yOffset;
@@ -98,10 +99,10 @@ public class LoginController implements Initializable {
 
         FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
         Parent window = (Pane) fmxlLoader.load();
-        con = fmxlLoader.<ChatController>getController();
+        RegCon = fmxlLoader.<RegisterController>getController();
         this.scene = new Scene(window);
 	}
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         imagePicker.getSelectionModel().selectFirst();

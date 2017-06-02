@@ -64,17 +64,7 @@ public class Listener implements Runnable{
         }
         logger.info("Connection accepted " + socket.getInetAddress() + ":" + socket.getPort());
         
-        
-        try {
-			Data msg = (Data)input.readObject();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        /*
+         /*
          *로그인 
          */
 		LoginData loginData = new LoginData(username, hostname, Constants.TYPE_LOGIN);
@@ -87,9 +77,6 @@ public class Listener implements Runnable{
 			e1.printStackTrace();
 		}
 		
-		/*
-		 * 대화 시작
-		 */
         try {
             //connect();
             logger.info("Sockets in and out ready!");

@@ -42,8 +42,6 @@ public class MainController {
 			os = new ObjectOutputStream(socket.getOutputStream());
 			is = new ObjectInputStream(socket.getInputStream());
 		} catch(Exception e) {
-			System.out.println("Connetion Failed");
-			System.out.println(server + " " + port);
 			e.printStackTrace();
 		}
 	}
