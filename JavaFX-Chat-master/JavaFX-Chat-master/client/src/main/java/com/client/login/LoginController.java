@@ -17,12 +17,14 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
@@ -43,9 +45,8 @@ public class LoginController implements Initializable {
     @FXML private TextField usernameTextfield;
     @FXML private ChoiceBox imagePicker;
     @FXML private Label selectedPicture;
-    public static ChatController con;
-    public static RegisterController RegCon;
     @FXML private BorderPane borderPane;
+    public static ChatController con;
     private double xOffset;
     private double yOffset;
     private Scene scene;
@@ -95,12 +96,9 @@ public class LoginController implements Initializable {
             con.setImageLabel(selectedPicture.getText());
         });
     }
+    
     public void Register(ActionEvent event) throws Exception {
-
-        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
-        Parent window = (Pane) fmxlLoader.load();
-        RegCon = fmxlLoader.<RegisterController>getController();
-        this.scene = new Scene(window);
+    	//
 	}
     
     @Override
