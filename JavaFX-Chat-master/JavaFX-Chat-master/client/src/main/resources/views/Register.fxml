@@ -9,32 +9,27 @@
 
 <AnchorPane fx:id="Register" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.login.RegisterController">
    <children>
-      <ImageView fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-      	<image>
-     		<Image url="images/background.png" />
-      	</image>
-      </ImageView>
-      <Button fx:id="Regcl" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#Regcl" text="&lt; �뮘濡�" />
-      <Label layoutX="75.0" layoutY="48.0" prefHeight="43.0" prefWidth="150.0" text="UniChat �쉶�썝媛��엯">
+      <Button fx:id="Regcl" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#Regcl" text="&lt; 뒤로" />
+      <Label layoutX="75.0" layoutY="48.0" prefHeight="43.0" prefWidth="150.0" text="UniChat 회원가입">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="mail" layoutX="27.0" layoutY="137.0" prefHeight="29.0" prefWidth="247.0" promptText="�씠硫붿씪 二쇱냼" />
-      <Button fx:id="Mailconfirm" alignment="CENTER" layoutX="188.0" layoutY="275.0" mnemonicParsing="false" onAction="#Mailconfirm" prefHeight="36.0" prefWidth="87.0" text="�씤利앺븯湲�" />
-      <Button fx:id="Regconfirm" alignment="CENTER" layoutX="28.0" layoutY="403.0" mnemonicParsing="false" onAction="#Regconfirm" prefHeight="36.0" prefWidth="247.0" text="�쉶�썝媛��엯" />
-      <CheckBox fx:id="Check1" layoutX="25.0" layoutY="328.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="�씠�슜�빟愿��뿉 �룞�쓽�빀�땲�떎">
+      <TextField fx:id="mail" layoutX="27.0" layoutY="137.0" prefHeight="29.0" prefWidth="247.0" promptText="E-mail" />
+      <Button fx:id="Mailconfirm" alignment="CENTER" layoutX="188.0" layoutY="275.0" mnemonicParsing="false" onAction="#Mailconfirm" prefHeight="36.0" prefWidth="87.0" text="인증하기" />
+      <Button fx:id="Regconfirm" alignment="CENTER" layoutX="28.0" layoutY="403.0" mnemonicParsing="false" onAction="#Regconfirm" prefHeight="36.0" prefWidth="247.0" text="회원가입" />
+      <CheckBox fx:id="Check1" layoutX="25.0" layoutY="328.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="이용약관에 동의합니다">
          <font>
             <Font size="13.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="Check2" layoutX="26.0" layoutY="358.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="媛쒖씤�젙蹂� 痍④툒諛⑹묠�뿉 �룞�쓽�빀�땲�떎">
+      <CheckBox fx:id="Check2" layoutX="26.0" layoutY="358.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="개인정보 취급방침에 동의합니다">
          <font>
             <Font size="13.0" />
          </font>
       </CheckBox>
       <Label fx:id="Regwarning" alignment="CENTER" layoutX="28.0" layoutY="449.0" prefHeight="19.0" prefWidth="247.0" textFill="RED" />
-      <TextField fx:id="pwd" layoutX="25.0" layoutY="176.0" prefHeight="29.0" prefWidth="247.0" promptText="鍮꾨�踰덊샇" />
-      <TextField fx:id="pwdconf" layoutX="25.0" layoutY="215.0" prefHeight="29.0" prefWidth="247.0" promptText="鍮꾨�踰덊샇 �솗�씤" />
+      <TextField fx:id="pwd" layoutX="25.0" layoutY="176.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호" />
+      <TextField fx:id="pwdconf" layoutX="25.0" layoutY="215.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호 확인" />
    </children>
 </AnchorPane>

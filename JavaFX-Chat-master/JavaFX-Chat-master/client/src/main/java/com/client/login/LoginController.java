@@ -97,8 +97,23 @@ public class LoginController implements Initializable {
         });
     }
     
-    public void Register(ActionEvent event) throws Exception {
-    	//
+    public void Register(ActionEvent event) throws IOException {        
+    	Platform.runLater(() -> {
+        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
+        Parent window = null;
+        try {
+            window = (Pane) fmxlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = MainLauncher.getPrimaryStage();
+        Scene scene = new Scene(window);
+        stage.setMaxWidth(300);
+        stage.setMaxHeight(500);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+    });
 	}
     
     @Override

@@ -27,28 +27,43 @@ public class RegisterController{
 	@FXML private TextField pwdconf;
 
 	public void Regcl(ActionEvent event) throws Exception{
-		/*
 	}
-
-		Stage stage = (Stage) Regcl.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/application/LoginView.fxml"));
-		Scene scene = new Scene(root,300,500);
-		stage.setScene(scene);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		stage.show();
-		stage.setTitle("Main");
-		*/
+    Platform.runLater(() -> {
+        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
+        Parent window = null;
+        try {
+            window = (Pane) fmxlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = MainLauncher.getPrimaryStage();
+        Scene scene = new Scene(window);
+        stage.setMaxWidth(350);
+        stage.setMaxHeight(420);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+    });
 	}
 	
 	public void Regconfirm(ActionEvent event) throws Exception{
 		if(Check1.isSelected() && Check2.isSelected()){
-			Stage stage = (Stage) Regconfirm.getScene().getWindow();
-			Parent root = FXMLLoader.load(getClass().getResource("/application/LoginView.fxml"));
-			Scene scene = new Scene(root,300,500);
-			stage.setScene(scene);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.show();
-			stage.setTitle("Main");
+	        Platform.runLater(() -> {
+	            FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
+	            Parent window = null;
+	            try {
+	                window = (Pane) fmxlLoader.load();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	            Stage stage = MainLauncher.getPrimaryStage();
+	            Scene scene = new Scene(window);
+	            stage.setMaxWidth(350);
+	            stage.setMaxHeight(420);
+	            stage.setResizable(false);
+	            stage.setScene(scene);
+	            stage.centerOnScreen();
+	        });
 		}
 		else{
 			Regwarning.setText("약관에 대해 동의하지 않았습니다");
