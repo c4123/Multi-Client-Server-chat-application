@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity  {
     private Client mClient;
     private static final int LOGIN_LOADER = 0;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -39,6 +39,14 @@
             android:layout_gravity="right"
             >
             <TextView
+                android:id="@+id/tv_list_whisper"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/material_orange"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+            <TextView
                 android:id="@+id/tv_list_msg"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"

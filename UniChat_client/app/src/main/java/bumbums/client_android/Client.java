@@ -28,8 +28,8 @@ public class Client {
     private ObjectOutputStream os;
     private ObjectInputStream is;
     private ArrayList<User> currentUser;
-    private String email;
     public static String nickname;
+    public static String email;
 
     private static class Singleton {
         public static final Client instance = new Client();

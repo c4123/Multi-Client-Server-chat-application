@@ -27,7 +27,7 @@ import aboullaite.util.Constants;
 import bumbums.client_android.Adapter.ChatViewAdapter;
 import bumbums.client_android.Adapter.CurrentUserAdapter;
 
-public class ChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Data> {
+public class ChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Data>, CurrentUserAdapter.OnClickHandler {
     private Client mClient;
     private RecyclerView mCurrentUserView;
     private CurrentUserAdapter mCurrentUserAdapter;
@@ -53,15 +53,15 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         mClient = Client.getInstance();
         mCurrentUser = new ArrayList<>();
         mChatDatas = new ArrayList<>();
-        mCurrentUserView = (RecyclerView)findViewById(R.id.rv_current_user);
-        mChatView = (RecyclerView)findViewById(R.id.rv_chat_view);
-        mCurrentUserAdapter = new CurrentUserAdapter(mCurrentUser);
-        mChatViewAdapter = new ChatViewAdapter(mChatDatas,new User(mClient.getEmail(),mClient.getNickname()));
-        mSendBtn = (Button)findViewById(R.id.btn_send);
-        mMsg = (EditText)findViewById(R.id.et_msg);
-        mNotiTextView = (TextView)findViewById(R.id.tv_noti);
-        mNotification  =(LinearLayout)findViewById(R.id.ll_noti);
-        mNotiDelBtn = (ImageView)findViewById(R.id.iv_del);
+        mCurrentUserView = (RecyclerView) findViewById(R.id.rv_current_user);
+        mChatView = (RecyclerView) findViewById(R.id.rv_chat_view);
+        mCurrentUserAdapter = new CurrentUserAdapter(mCurrentUser, this);
+        mChatViewAdapter = new ChatViewAdapter(mChatDatas, new User(mClient.getEmail(), mClient.getNickname()));
+        mSendBtn = (Button) findViewById(R.id.btn_send);
+        mMsg = (EditText) findViewById(R.id.et_msg);
+        mNotiTextView = (TextView) findViewById(R.id.tv_noti);
+        mNotification = (LinearLayout) findViewById(R.id.ll_noti);
+        mNotiDelBtn = (ImageView) findViewById(R.id.iv_del);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
         isFirstInput = true;
@@ -78,7 +78,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             loaderManager.restartLoader(CHAT_LOADER, null, this);
         }
-        Toast.makeText(this,getString(R.string.input_nickname),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.input_nickname), Toast.LENGTH_SHORT).show();
 
         mSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +86,29 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+
                         String msg = mMsg.getText().toString();
-                        if(isFirstInput){
+                        if (msg.equals(""))
+                            return;
+
+                        if (isFirstInput) {
                             mClient.setNickname(msg);
                             isFirstInput = false;
                         }
-                        String sendor = mClient.getNickname();
-                        Data data = new Data(Constants.TYPE_MSG,msg,null);
+                        String sendor = mClient.getEmail();
+                        Data data=null;
+                        if(msg.charAt(0)=='/'){//귓속말
+                            int index = msg.indexOf(' ');
+                            if(index != -1){
+                                String receivor = msg.substring(1,index);
+                                String text = msg.substring(index+1, msg.length());
+                                data = new Data(Constants.TYPE_WHISPER, text, null);
+                                data.setReceiverEmail(receivor);
+                            }
+                        }
+                        else{ //일반메세지
+                            data = new Data(Constants.TYPE_MSG, msg, null);
+                        }
                         data.setSendorEmail(mClient.getEmail());
                         data.setSendorNickName(mClient.getNickname());
                         mClient.sendMessage(data);
@@ -132,6 +148,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 });
 
             }
+
             @Override
             public Data loadInBackground() {
                 return null;
@@ -141,18 +158,17 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Data> loader, Data data) {
-        if(data!=null){
+        if (data != null) {
             int type = data.getType();
-            if(type == Constants.TYPE_MSG || type ==Constants.TYPE_WHISPER){
-                Log.d("#####DATA",data.toString());
+            if (type == Constants.TYPE_MSG || type == Constants.TYPE_WHISPER) {
+                Log.d("#####DATA", data.toString());
+                Log.d("#####SENDOR",data.getSendorEmail());
                 updateMsg(data);
-            }
-            else if(type == Constants.TYPE_USER_LIST){
-                Log.d("#####UPDATER",data.toString());
+            } else if (type == Constants.TYPE_USER_LIST) {
+                Log.d("#####UPDATER", data.toString());
                 updateUser(data.getUserList());
-            }
-            else if(type ==Constants.TYPE_NOTIFICATION){
-                Log.d("#####NOTI",data.toString());
+            } else if (type == Constants.TYPE_NOTIFICATION) {
+                Log.d("#####NOTI", data.toString());
                 updateNoti(data.getMsg());
             }
 
@@ -165,32 +181,32 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
 
-    public void updateMsg(final Data data){
+    public void updateMsg(final Data data) {
         ((ChatActivity) this).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mChatDatas.add(data);
                 mChatViewAdapter.notifyDataSetChanged();
-                mChatView.smoothScrollToPosition(mChatDatas.size()-1);
+                mChatView.smoothScrollToPosition(mChatDatas.size() - 1);
             }
         });
     }
 
-    public void updateUser(final ArrayList<User> currentUser){
+    public void updateUser(final ArrayList<User> currentUser) {
         ((ChatActivity) this).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mCurrentUser.clear();
                 mCurrentUser.addAll(currentUser);
                 mCurrentUserAdapter.notifyDataSetChanged();
-                mCurrentUserView.smoothScrollToPosition(currentUser.size()-1);
+                mCurrentUserView.smoothScrollToPosition(currentUser.size() - 1);
             }
         });
 
     }
 
-    public void updateNoti(final String text){
-        ((ChatActivity)this).runOnUiThread(new Runnable() {
+    public void updateNoti(final String text) {
+        ((ChatActivity) this).runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mNotiTextView.setText(text);
@@ -204,7 +220,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onBackPressed() {
 
-        if(backPressCloseHandler.onBackPressed()){ //만약 두번 누른거라면
+        if (backPressCloseHandler.onBackPressed()) { //만약 두번 누른거라면
             //클라이언트 종료
             new Thread(new Runnable() {
                 @Override
@@ -212,10 +228,14 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                     mClient.stopClient();
                 }
             }).start();
-        }
-        else{
+        } else {
 
         }
+    }
 
+    @Override
+    public void onClickUser(String email) {
+        mMsg.setText("/" + email + " ");
+        mMsg.setSelection(mMsg.length());
     }
 }

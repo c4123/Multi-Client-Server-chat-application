@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,10 +22,18 @@ import bumbums.client_android.R;
 public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.UserViewHolder> {
 
     private ArrayList<User> currentUser;
+    private Context mContext;
+    private OnClickHandler mOnClickHandler;
 
-    public CurrentUserAdapter(ArrayList<User> currentUser){
+    public CurrentUserAdapter(ArrayList<User> currentUser,OnClickHandler onClickHandler){
         this.currentUser = currentUser;
+        mOnClickHandler = onClickHandler;
     }
+
+    public interface OnClickHandler{
+        void onClickUser(String email);
+    }
+
     @Override
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -58,20 +67,29 @@ public class CurrentUserAdapter extends RecyclerView.Adapter<CurrentUserAdapter.
         TextView nickname;
         TextView email;
         ImageView photo;
+        LinearLayout frame;
         public UserViewHolder(View itemView) {
             super(itemView);
             nickname = (TextView)itemView.findViewById(R.id.tv_row_grid_name);
             email = (TextView)itemView.findViewById(R.id.tv_row_grid_email);
             photo = (ImageView)itemView.findViewById(R.id.iv_profile);
+            frame = (LinearLayout)itemView.findViewById(R.id.ll_user);
         }
-        void bind(int listIndex){
+        void bind(final int listIndex){
             User user = currentUser.get(listIndex);
             nickname.setText(user.getNickname());
             email.setText(user.getId());
             if(email.getText().equals(Constants.DonggukBotEmail)){
                 photo.setImageResource(R.drawable.ic_donggukbot);
             }
+            frame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnClickHandler.onClickUser(currentUser.get(listIndex).getId());
+                }
+            });
         }
+
 
     }
 }
