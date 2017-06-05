@@ -97,7 +97,7 @@ public class LoginController implements Initializable {
         });
     }
     
-    public void Register(ActionEvent event) throws IOException {        
+    public void Register(ActionEvent event) throws IOException {
     	Platform.runLater(() -> {
         FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
         Parent window = null;
