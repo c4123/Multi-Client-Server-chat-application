@@ -2,14 +2,12 @@ package com.client.chatwindow;
 
 import static com.messages.MessageType.CONNECTED;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.sql.ResultSetMetaData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +82,7 @@ public class Listener implements Runnable{
                 Data message = null;
                 message = (Data) input.readObject();
                 if (message != null) {
-                    logger.debug("Message recieved:" + message.getMsg() + " MessageType:" + message.getType() + "Name:" + message.getSendor());
+                    logger.debug("Message recieved:" + message.getMsg() + " MessageType:" + message.getType() + "Name:" + message.getSendorEmail());
                     switch (message.getType()) {
                         case Constants.TYPE_MSG:
                             controller.addToChat(message);
@@ -126,6 +124,7 @@ public class Listener implements Runnable{
      * @param msg - The message which the user generates
      */
     public static void send(String msg) throws IOException {
+        System.out.println("send : " + username + ": " + msg);
         Data createMessage = new Data(Constants.TYPE_MSG, msg, null);
         oos.writeObject(createMessage);
         oos.flush();

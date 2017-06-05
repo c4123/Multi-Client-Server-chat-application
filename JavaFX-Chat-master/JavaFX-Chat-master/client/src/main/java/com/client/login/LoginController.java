@@ -47,6 +47,7 @@ public class LoginController implements Initializable {
     @FXML private Label selectedPicture;
     @FXML private BorderPane borderPane;
     public static ChatController con;
+    public static RegisterController registerCon;
     private double xOffset;
     private double yOffset;
     private Scene scene;
@@ -62,7 +63,6 @@ public class LoginController implements Initializable {
     }
     public void loginButtonAction() throws IOException {
         String hostname = hostnameTextfield.getText();
-        //int port = Integer.parseInt(portTextfield.getText());
         String port = portTextfield.getText();
         String username = usernameTextfield.getText();
         String picture = selectedPicture.getText();
@@ -106,6 +106,11 @@ public class LoginController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        registerCon = fmxlLoader.<RegisterController>getController();
+        RegisterListener registerListener = new RegisterListener(portTextfield.getText(), registerCon);
+        Thread t = new Thread(registerListener);
+        t.start();
         Stage stage = MainLauncher.getPrimaryStage();
         Scene scene = new Scene(window);
         stage.setMaxWidth(350);

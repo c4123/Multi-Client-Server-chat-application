@@ -8,13 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.client.login.MainLauncher;
-import com.client.util.VoicePlayback;
 import com.client.util.VoiceRecorder;
 import com.client.util.VoiceUtil;
 import com.messages.Message;
-import com.messages.MessageType;
 import com.messages.Status;
-import com.messages.User;
 import com.messages.Bubble.BubbleSpec;
 import com.messages.Bubble.BubbledLabel;
 import com.traynotifications.animations.AnimationType;
@@ -121,8 +118,8 @@ public class ChatController implements Initializable {
                     VoicePlayback.playAudio(message.getVoiceMsg());
                  */
                // }else {
-                    bl6.setText(message.getSendor() + ": " + message.getMsg());
-                    System.out.println("addToChat : " + message.getSendor() + ": " + message.getMsg());
+                    bl6.setText(message.getSendorEmail() + ": " + message.getMsg());
+                    System.out.println("addToChat : " + message.getSendorEmail() + ": " + message.getMsg());
                //}
                 bl6.setBackground(new Background(new BackgroundFill(Color.WHITE,null, null)));
                 HBox x = new HBox();
@@ -171,7 +168,7 @@ public class ChatController implements Initializable {
         };
         yourMessages.setOnSucceeded(event -> chatPane.getItems().add(yourMessages.getValue()));
 
-        if (message.getSendor().equals(usernameLabel.getText())) {
+        if (message.getSendorEmail().equals(usernameLabel.getText())) {
             Thread t2 = new Thread(yourMessages);
             t2.setDaemon(true);
             t2.start();
@@ -197,7 +194,7 @@ public class ChatController implements Initializable {
     public void setUserList(Data message) {
         logger.info("setUserList() method Enter");
         Platform.runLater(() -> {
-            ObservableList<User> users = FXCollections.observableList(message.getUserList());
+            ObservableList<aboullaite.User> users = FXCollections.observableList(message.getUserList());
             userList.setItems(users);
             userList.setCellFactory(new CellRenderer());
             setOnlineLabel(String.valueOf(message.getUserList().size()));
