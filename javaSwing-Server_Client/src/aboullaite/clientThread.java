@@ -193,11 +193,14 @@ public class clientThread extends Thread {
 					else if(type ==Constants.TYPE_WHISPER){
 						synchronized (this) {
 							for (int i = 0; i < maxClientsCount; i++) {
-								if (threads[i] != null && threads[i] != this && threads[i].clientName != null
-										&& threads[i].user.getId().equals(receiveData.getReceiverEmail()) && threads[i].loginSuccess) {
+								if (threads[i] != null 
+										&& threads[i].clientName != null
+										&& threads[i].loginSuccess
+										&& (threads[i].user.getId().equals(receiveData.getReceiverEmail())
+												)){
+									//receivor 만이 아니라, sendor한테도 귓속말 메세지를 보내줌
 									threads[i].os.writeObject(receiveData);
 									threads[i].os.flush();
-							
 									/*
 									 * Echo this message to let the client
 									 * know the private message was sent.
@@ -205,6 +208,10 @@ public class clientThread extends Thread {
 									break;
 								}
 							}
+							//나한테도 메세지가 와야한다.
+							os.writeObject(receiveData);
+							os.flush();
+						
 						}
 					}
 					else if(type == Constants.TYPE_QUIT){
