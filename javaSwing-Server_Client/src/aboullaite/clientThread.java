@@ -129,6 +129,7 @@ public class clientThread extends Thread {
 						serverMsg("enter your nickname");
 						
 						Data receiveData = (Data)is.readObject();
+						System.out.println("reveiveData : " + receiveData.getMsg());
 						clientName =receiveData.getMsg();
 						user = new User(data.getId(), clientName);
 					}
