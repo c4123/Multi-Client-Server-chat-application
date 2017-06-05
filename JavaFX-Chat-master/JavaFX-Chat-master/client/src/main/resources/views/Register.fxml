@@ -16,7 +16,6 @@
          </font>
       </Label>
       <TextField fx:id="mail" layoutX="27.0" layoutY="137.0" prefHeight="29.0" prefWidth="247.0" promptText="E-mail" />
-      <Button fx:id="Mailconfirm" alignment="CENTER" layoutX="188.0" layoutY="275.0" mnemonicParsing="false" onAction="#Mailconfirm" prefHeight="36.0" prefWidth="87.0" text="인증하기" />
       <Button fx:id="Regconfirm" alignment="CENTER" layoutX="28.0" layoutY="403.0" mnemonicParsing="false" onAction="#Regconfirm" prefHeight="36.0" prefWidth="247.0" text="회원가입" />
       <CheckBox fx:id="Check1" layoutX="25.0" layoutY="328.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="이용약관에 동의합니다">
          <font>

@@ -108,7 +108,7 @@ public class LoginController implements Initializable {
         }
         Stage stage = MainLauncher.getPrimaryStage();
         Scene scene = new Scene(window);
-        stage.setMaxWidth(300);
+        stage.setMaxWidth(350);
         stage.setMaxHeight(500);
         stage.setResizable(false);
         stage.setScene(scene);
