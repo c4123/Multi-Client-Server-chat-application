@@ -80,7 +80,7 @@ public class ChatClient {
                     	Data data ;
                     	 while ((data = (Data)is.readObject()) != null){
                     			if(data.getType()==Constants.TYPE_MSG){     	
-                               		notifyObservers("<"+data.getSendor()+">"+data.getMsg());   
+                               		notifyObservers("<"+data.getSendorEmail()+">"+data.getMsg());   
                                	}
                                	else if(data.getType()==Constants.TYPE_USER_LIST){
                                		//현재 유저 갱신되면 받는 부분.

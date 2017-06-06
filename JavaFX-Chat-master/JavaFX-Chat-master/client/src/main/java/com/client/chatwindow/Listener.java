@@ -166,5 +166,9 @@ public class Listener implements Runnable{
         createMessage.setPicture(picture);
         oos.writeObject(createMessage);
     }
-
+    
+    public static void closeSocket() throws IOException {
+    	Data createMessage = new Data(Constants.TYPE_QUIT, null, null);
+    	oos.writeObject(createMessage);
+    }
 }

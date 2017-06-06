@@ -231,9 +231,10 @@ public class ChatController implements Initializable {
     }
 
     @FXML
-    public void closeApplication() {
-        Platform.exit();
-        System.exit(0);
+    public void closeApplication() throws IOException {
+			Listener.closeSocket();
+			Platform.exit();
+			System.exit(0);
     }
 
     /* Method to display server messages */
