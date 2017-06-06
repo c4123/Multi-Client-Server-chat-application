@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.client.login.POPController">
+   <children>
+      <TextField fx:id="confinput" layoutX="64.0" layoutY="36.0" />
+      <Button fx:id="confbtn" layoutX="97.0" layoutY="76.0" mnemonicParsing="false" onAction="#Conf" prefHeight="29.0" prefWidth="107.0" text="인증하기" />
+      <Label fx:id="error" alignment="CENTER" layoutX="32.0" layoutY="14.0" prefHeight="19.0" prefWidth="237.0" textFill="RED" />
+   </children>
+</AnchorPane>
