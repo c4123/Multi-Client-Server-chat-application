@@ -17,6 +17,7 @@ import com.messages.Constants;
 
 import aboullaite.Data;
 import aboullaite.LoginData;
+import javafx.stage.Stage;
 
 public class RegisterListener implements Runnable {
 	

@@ -98,8 +98,8 @@ public class LoginController implements Initializable {
     }
     
     public void Register(ActionEvent event) throws IOException {
-    	Platform.runLater(() -> {
-        FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
+        
+    	FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/Register.fxml"));
         Parent window = null;
         try {
             window = (Pane) fmxlLoader.load();
@@ -118,7 +118,6 @@ public class LoginController implements Initializable {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.centerOnScreen();
-    });
 	}
     
     @Override

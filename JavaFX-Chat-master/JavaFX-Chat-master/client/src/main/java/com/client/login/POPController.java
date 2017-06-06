@@ -1,11 +1,13 @@
 package com.client.login;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class POPController{
 
@@ -25,6 +27,11 @@ public class POPController{
 
 	public void closePOPWindow() {
 		//이 부분 에러
-		((Node)(event.getSource())).getScene().getWindow().hide();
+		Platform.runLater(() -> {
+			Stage stage = (Stage) confbtn.getScene().getWindow();
+			stage.close();
+
+			//((Node)(event.getSource())).getScene().getWindow().hide();
+		});
 	}
 }
