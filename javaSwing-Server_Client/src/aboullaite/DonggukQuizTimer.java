@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 public class DonggukQuizTimer extends TimerTask {
 	 public String nowAnswer ="";
-	 private String QuizAnswer[][];
+	 private String quizAnswer[][];
 	 private DonggukBot mBot;
 	 private boolean quizStart;
 	 public String lastAnswerEmail;
@@ -15,13 +15,8 @@ public class DonggukQuizTimer extends TimerTask {
 		 quizStart = false;
 		 lastAnswerEmail="";
 		// TODO Auto-generated constructor stub
-		 QuizAnswer = new String[10][2];
-		 for(int i=0;i<10;i++){
-			 QuizAnswer[i][0] = "퀴즈 문제 "+ i+"번입니다.";
-			 QuizAnswer[i][1] = i+"";
-			 //정답은 i
-		 }
-	 
+		 quizAnswer = DBHelper.getQuiz();
+		 System.out.println("퀴즈 데이터 "+quizAnswer.length+"개 받아옴");
 	 }
 	 
 	 public boolean getQuizStart(){
@@ -40,12 +35,14 @@ public class DonggukQuizTimer extends TimerTask {
 	public void run() {
 	// TODO Auto-generated method stub
 		quizStart = false;
-		Random random = new Random();
-		int randNum = random.nextInt(10);
-		String quiz = QuizAnswer[randNum][0];
-		String answer = QuizAnswer[randNum][1];
-		nowAnswer = answer;
-		quizStart = true;
-		mBot.sendMsg(quiz);
+		if(quizAnswer.length!=0){
+			Random random = new Random();
+			int randNum = random.nextInt(quizAnswer.length);
+			String quiz = quizAnswer[randNum][0];
+			String answer = quizAnswer[randNum][1];
+			nowAnswer = answer;
+			quizStart = true;
+			mBot.sendMsg(quiz);
+		}
 	}
 }

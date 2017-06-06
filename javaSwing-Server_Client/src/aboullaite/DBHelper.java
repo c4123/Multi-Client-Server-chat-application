@@ -84,29 +84,32 @@ public class DBHelper {
 		   return result;
 	   }
 	   
-	   public static HashMap<String, String> getQuiz() {
-		   HashMap<String, String> quiz = new HashMap<String, String>();
-		   
+	   public static String[][] getQuiz(){
+		   String[][] quiz =null;
 		   try {
 			   conn = getConnection();	
 			   ps = conn.prepareStatement("SELECT question, answer FROM quiz");
-		
-			   rs = ps.executeQuery();
 			   
-			   while(rs.next()) {
-				   String question = rs.getString("qeusstion");				
-				   String answer = rs.getString("answer");				
-				   quiz.put(question, answer);			
-			   }
+			   rs = ps.executeQuery();
+			   quiz = new String[8][2];
+	
+
+				   
+			 int i=0;
+			 while(rs.next()){
+					   quiz[i][0] = rs.getString(1);
+					   quiz[i][1] = rs.getString(2);
+					   i++;
+			}  
+			
 			   
 		   } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		   }
-		   
 		   return quiz;
-		}
-	   
+	   }
+
 	   public static boolean insertUser(String id, String passwd) {
 		   boolean result = false;
 		   

@@ -26,7 +26,7 @@ public class DonggukBot {
         String result="";
         canNotification = false;
         String userId = "DONGGUKBOT";
-		String passWd = "1q2w3e4r!";
+		String passWd = "1q2w3e4r!!";
 		LoginData loginData = new LoginData(userId,passWd,Constants.TYPE_LOGIN);
 		
 		os.writeObject(loginData);
