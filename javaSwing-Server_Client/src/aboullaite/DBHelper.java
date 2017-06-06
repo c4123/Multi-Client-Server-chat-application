@@ -71,7 +71,7 @@ public class DBHelper {
 			   ps = conn.prepareStatement("SELECT * FROM user WHERE id=? AND passwd = PASSWORD(?)");
 			   ps.setString(1,  id.trim());
 			   ps.setString(2,  passwd.trim());
-			   
+	
 			   rs = ps.executeQuery();
 			   
 			   if(rs.next())
@@ -85,16 +85,22 @@ public class DBHelper {
 	   }
 	   
 	   public static String[][] getQuiz(){
+		   
+		   String[][] quiz = new String[2][2];
+		   quiz[0][0] = "동국대학교를 상징하는 꽃 이름은?";
+		   quiz[0][1] = "연꽃";
+		   quiz[1][0] = "팔정도는 몇개의 길로 되어있을까?";
+		   quiz[1][1] ="8개";
+		   return quiz;
+	   }
+	   /*
+	   public static String[][] getQuiz(){
 		   String[][] quiz =null;
 		   try {
 			   conn = getConnection();	
 			   ps = conn.prepareStatement("SELECT question, answer FROM quiz");
-			   
 			   rs = ps.executeQuery();
-			   quiz = new String[8][2];
-	
-
-				   
+			   quiz = new String[8][2]; 
 			 int i=0;
 			 while(rs.next()){
 					   quiz[i][0] = rs.getString(1);
@@ -108,7 +114,7 @@ public class DBHelper {
 			e.printStackTrace();
 		   }
 		   return quiz;
-	   }
+	   }*/
 
 	   public static boolean insertUser(String id, String passwd) {
 		   boolean result = false;
