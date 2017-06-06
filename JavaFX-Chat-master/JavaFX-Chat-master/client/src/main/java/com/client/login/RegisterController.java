@@ -10,6 +10,9 @@ import org.controlsfx.control.PopOver;
 
 import org.controlsfx.tools.Platform;
 
+import com.messages.Constants;
+
+import aboullaite.LoginData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,20 +46,18 @@ public class RegisterController{
 		stage.show();
 		stage.setTitle("Main");
 	}
+	
 	public void Regconfirm(ActionEvent event) throws Exception{
 		if(Check1.isSelected() && Check2.isSelected()){
 			if(pwd.getText().equals(pwdconf.getText())){
 				Regwarning.setText("");
-		        try {
-		            Parent root = FXMLLoader.load(getClass().getResource("/views/ConfirmationPOP.fxml"));
-		            Stage stage2 = new Stage();
-		            stage2.setScene(new Scene(root, 300, 120));
-		            stage2.show();
-		        }
-		        catch (IOException e) {
-		            e.printStackTrace();
-		        }
-						
+				String id = mail.getText();
+				String passwd = pwd.getText();
+				LoginData loginData = new LoginData(id, passwd, Constants.TYPE_REGISTER);
+
+				RegisterListener.sendRegister(loginData); //로그인 데이터 전송
+
+
 				/*Stage stage = (Stage) Regconfirm.getScene().getWindow();
 				Parent root = FXMLLoader.load(getClass().getResource("/views/LoginView.fxml"));
 				Scene scene = new Scene(root,350,420);
@@ -73,4 +74,24 @@ public class RegisterController{
 		}
 	}
 
+	public void ShowErrorDuplicatedId() {
+		Regwarning.setText("중복된 아이디 입니다.");
+	}
+
+	public void ShowConfirmationPOP() {   	
+		//이 부분도 에러
+		try {
+			FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/ConfirmationPOP.fxml"));
+			Parent root = fmxlLoader.load();
+			POPController controller = fmxlLoader.<POPController>getController();
+			
+			RegisterListener.setPopController(controller);
+			
+			Stage stage2 = new Stage();
+			stage2.setScene(new Scene(root, 300, 120));
+			stage2.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

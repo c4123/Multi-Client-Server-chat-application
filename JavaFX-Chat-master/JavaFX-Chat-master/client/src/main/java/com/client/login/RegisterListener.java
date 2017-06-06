@@ -7,6 +7,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import javax.security.auth.callback.ConfirmationCallback;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ public class RegisterListener implements Runnable {
 	private Socket socket;
 	private String server;
     public RegisterController controller;
+    public static POPController popController;
 	private static ObjectOutputStream oos;
 	private InputStream is;
 	private ObjectInputStream input;
@@ -60,14 +63,19 @@ public class RegisterListener implements Runnable {
 					logger.debug("Message recieved:" + message.getMsg() + " MessageType:" + message.getType() + "Name:" + message.getSendorEmail());
                     switch (message.getMsg()) {
                     case Constants.REGISTER_FAIL_ID:
+                    	controller.ShowErrorDuplicatedId();
                     	break;
                     case Constants.REGISTER_WAITING_AUTHCODE:
+                    	controller.ShowConfirmationPOP();
                     	break;
                     case Constants.REGISTER_SUCCESS:
+                    	popController.closePOPWindow();
                     	break;
                     case Constants.REGISTER_FAIL_AUTHCODE:
+                    	popController.ShowErrorInvaildCode();
                     	break;
                     case Constants.REGISTER_CANCEL:
+                    	popController.closePOPWindow();
                     	break;
                     }
 				}
@@ -88,6 +96,19 @@ public class RegisterListener implements Runnable {
 	}
 	
 	public static void sendAuthcode(String authcode) {
-		//¹Ì±¸Çö
+		try {
+			oos.writeObject(new Data(Constants.TYPE_MSG, authcode, null));
+			oos.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public POPController getPopController() {
+		return popController;
+	}
+
+	public static void setPopController(POPController controller) {
+		popController = controller;
 	}
 }
