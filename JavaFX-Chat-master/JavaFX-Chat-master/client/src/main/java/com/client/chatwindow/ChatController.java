@@ -61,6 +61,7 @@ public class ChatController implements Initializable {
     @FXML private ListView userList;
     @FXML private ImageView userImageView;
     @FXML private Button recordBtn;
+    @FXML private Label chatnotice;
     @FXML ListView chatPane;
     @FXML ListView statusList;
     @FXML BorderPane borderPane;
@@ -312,12 +313,12 @@ public class ChatController implements Initializable {
 
     public void setImageLabel(String selectedPicture) {
         switch (selectedPicture) {
-            case "Dominic":
+            /*case "Dominic":
                 this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/Dominic.png").toString()));
                 break;
             case "Sarah":
                 this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/sarah.png").toString()));
-                break;
+                break;*/
             case "Default":
                 this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/default.png").toString()));
                 break;
@@ -342,4 +343,8 @@ public class ChatController implements Initializable {
             stage.centerOnScreen();
         });
     }
+    
+    /*public void chatnotice(){
+    	chatnotice.getText();
+    }*/ //공지사항
 }

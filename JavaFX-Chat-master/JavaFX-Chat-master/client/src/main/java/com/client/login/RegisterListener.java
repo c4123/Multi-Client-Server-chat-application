@@ -70,13 +70,13 @@ public class RegisterListener implements Runnable {
                     	controller.ShowConfirmationPOP();
                     	break;
                     case Constants.REGISTER_SUCCESS:
-                    	popController.closePOPWindow();
+                    	popController.Popconf();
                     	break;
                     case Constants.REGISTER_FAIL_AUTHCODE:
                     	popController.ShowErrorInvaildCode();
                     	break;
                     case Constants.REGISTER_CANCEL:
-                    	popController.closePOPWindow();
+                    	popController.closePopup();
                     	break;
                     }
 				}

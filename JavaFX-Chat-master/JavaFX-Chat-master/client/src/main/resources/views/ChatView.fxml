@@ -46,11 +46,16 @@
       </VBox>
    </center>
    <left>
-      <VBox maxHeight="1.7976931348623157E308" BorderPane.alignment="CENTER">
+      <VBox maxHeight="1.7976931348623157E308" prefHeight="450.0" prefWidth="838.0" BorderPane.alignment="CENTER">
          <children>
+            <Label fx:id="chatnotice" alignment="CENTER" contentDisplay="CENTER" text="&lt;공지사항&gt;" textAlignment="CENTER" textFill="#ff6600">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
             <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="496.0" vbarPolicy="ALWAYS" vmin="1.0" vvalue="1.0" VBox.vgrow="ALWAYS">
                <content>
-                  <ListView fx:id="chatPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" />
+                  <ListView fx:id="chatPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="459.0" prefWidth="819.0" />
                </content>
             </ScrollPane>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="100.0" VBox.vgrow="NEVER">
