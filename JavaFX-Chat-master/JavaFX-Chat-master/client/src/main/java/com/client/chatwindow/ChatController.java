@@ -77,8 +77,16 @@ public class ChatController implements Initializable {
 
     public void sendButtonAction() throws IOException {
         String msg = messageBox.getText();
+        
         if (!messageBox.getText().isEmpty()) {
-            Listener.send(msg);
+        	if(msg.startsWith("/w")) {
+        		//±Ó¼Ó¸»
+        		String[] whisperMsg = msg.split("\\s", 3);
+        		whisperMsg[2] = whisperMsg[2].trim();
+        		Listener.sendAsWhisper(whisperMsg[1], whisperMsg[2]);
+        	} else {
+        		Listener.send(msg);        		
+        	}
             messageBox.clear();
         }
     }
