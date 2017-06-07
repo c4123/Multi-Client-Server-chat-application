@@ -91,9 +91,7 @@ public class clientThread extends Thread {
 						String msgFromClient =((Data)is.readObject()).getMsg(); //클라이언트가 보내온 인증코드.
 						end = System.currentTimeMillis();
 						time = end - start;
-						
-						//1000 = 1초, 60000 = 60초/1분, 180000 = 3분
-						if (end > 180000) {
+						if (time > 180000) {
 							System.out.println("시간 초과");
 							serverMsg(Constants.REGISTER_TIME_EXCEEDED);
 						}

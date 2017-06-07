@@ -23,6 +23,7 @@ public class DonggukBot {
         socket = new Socket(server, port);
         os = new ObjectOutputStream(socket.getOutputStream());
         is = new ObjectInputStream(socket.getInputStream());
+    	donggukQuizTimer = new DonggukQuizTimer(this);
         String result="";
         canNotification = false;
         String userId = "DONGGUKBOT";
@@ -103,7 +104,6 @@ public class DonggukBot {
     }
     
     public void startQuiz(){
-		donggukQuizTimer = new DonggukQuizTimer(this);
 		Timer timer = new Timer();
 		timer.schedule(donggukQuizTimer, 10000, 60000);
     }
