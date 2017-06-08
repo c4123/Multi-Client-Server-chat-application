@@ -49,24 +49,12 @@
                         <Image url="@../images/default.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="Sarahview" fitHeight="93.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image preserveRatio="false" smooth="false" url="@../images/sarah.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fx:id="Dominicview" fitHeight="93.0" fitWidth="124.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                     <image>
-                        <Image preserveRatio="false" smooth="true" url="@../images/Dominic.png" />
-                     </image>
-                  </ImageView>
                </children>
             </StackPane>
             <ChoiceBox fx:id="imagePicker" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <items>
                   <FXCollections fx:factory="observableArrayList">
                      <String fx:value="Default" />
-                     <String fx:value="Dominic" />
-                     <String fx:value="Sarah" />
                   </FXCollections>
                </items>
                     </ChoiceBox>
