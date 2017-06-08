@@ -2,6 +2,7 @@ package bumbums.client_android;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -13,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
     private final int LOGIN_LOADER = 1;
     private boolean mIsServerConnected ;
     private Toast mToast;
+    private CheckBox mMemory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
         mLoginBtn = (Button) findViewById(R.id.btn_login);
         mServerBtn = (Button) findViewById(R.id.btn_serverAccess);
         mLoadingBar = (ProgressBar)findViewById(R.id.pb_loading);
+        mMemory = (CheckBox)findViewById(R.id.cb_memory);
+
+        // 계정정보 저장
+        SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String s_email =  mEmail.getText().toString();
+        editor.putString("email", s_email);
+        editor.commit();
+
+
         // connect to the server
         final LoaderManager loaderManager = getSupportLoaderManager();
         final Loader<Data> loginLoader = loaderManager.getLoader(LOGIN_LOADER);
@@ -92,6 +105,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderManager.Lo
             }
         });
 
+        // 계정기억 체크박스를 체크하면 저장되있던 데이터가 이메일에 자동입력.
+        if(mMemory.isChecked() == true)
+        {
+          pref = getSharedPreferences("pref",MODE_PRIVATE);
+          String email = pref.getString("email",s_email);
+            mEmail.setText(email);
+
+        }
 
         mJoinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
