@@ -111,6 +111,8 @@ public class Listener implements Runnable{
                             */
                         case Constants.TYPE_WHISPER:
                         	controller.addToChat(message);
+                        case Constants.TYPE_NOTIFICATION:
+                        	controller.chatnotice(message);
                           default:
                         	  break;
                     }

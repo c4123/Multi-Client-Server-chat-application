@@ -12,14 +12,18 @@ public class Constants {
 	public static final String REGISTER_WAITING_AUTHCODE="waitingAuthCode";
 	public static final String REGISTER_FAIL_AUTHCODE= "registerFailIdAuthCode";
 	public static final String REGISTER_CANCEL = "registerCancel";
+	public static final String REGISTER_TIME_EXCEEDED = "registerTimeExceeded";
 
 
-
-	
 	//for just data
 	public static final int TYPE_MSG = 0;
 	public static final int TYPE_WHISPER = 1;
 	public static final int TYPE_USER_LIST = 2;
 	public static final int TYPE_QUIT = 3;
+	public static final int TYPE_NOTIFICATION = 4;
+	
+	//for just DONGGUK bot
+	public static final String DonggukBotName = "DonggukBot";
+	public static final String DonggukBotEmail = "DONGGUKBOT";
 	
 }

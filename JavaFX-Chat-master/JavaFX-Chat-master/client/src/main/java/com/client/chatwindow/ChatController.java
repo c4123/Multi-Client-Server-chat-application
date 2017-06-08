@@ -346,7 +346,7 @@ public class ChatController implements Initializable {
         });
     }
     
-    /*public void chatnotice(){
-    	chatnotice.setText();
-    }*/ //공지사항
+    public void chatnotice(Data msg){
+    	chatnotice.setText(msg.getMsg());
+    }
 }
