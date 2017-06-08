@@ -84,17 +84,6 @@ public class RegisterController{
             }
             else
                Regwarning.setText("동국대학교 웹메일을 입력하세요");
-               
-               
-   
-   
-               /*Stage stage = (Stage) Regconfirm.getScene().getWindow();
-               Parent root = FXMLLoader.load(getClass().getResource("/views/LoginView.fxml"));
-               Scene scene = new Scene(root,350,420);
-               stage.setScene(scene);
-               scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-               stage.show();
-               stage.setTitle("Main");*/
          }
          else
             Regwarning.setText("비밀번호가 일치하지 않습니다");

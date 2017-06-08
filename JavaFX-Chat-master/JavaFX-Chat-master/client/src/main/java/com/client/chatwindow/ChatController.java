@@ -321,12 +321,6 @@ public class ChatController implements Initializable {
 
     public void setImageLabel(String selectedPicture) {
         switch (selectedPicture) {
-            /*case "Dominic":
-                this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/Dominic.png").toString()));
-                break;
-            case "Sarah":
-                this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/sarah.png").toString()));
-                break;*/
             case "Default":
                 this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/default.png").toString()));
                 break;
@@ -353,6 +347,6 @@ public class ChatController implements Initializable {
     }
     
     /*public void chatnotice(){
-    	chatnotice.getText();
+    	chatnotice.setText();
     }*/ //공지사항
 }
