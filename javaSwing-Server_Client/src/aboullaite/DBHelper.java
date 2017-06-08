@@ -83,38 +83,35 @@ public class DBHelper {
 		   }
 		   return result;
 	   }
-	   
-	   public static String[][] getQuiz(){
-		   
-		   String[][] quiz = new String[2][2];
-		   quiz[0][0] = "동국대학교를 상징하는 꽃 이름은?";
-		   quiz[0][1] = "연꽃";
-		   quiz[1][0] = "팔정도는 몇개의 길로 되어있을까?";
-		   quiz[1][1] ="8개";
-		   return quiz;
-	   }
-	   /*
+
 	   public static String[][] getQuiz(){
 		   String[][] quiz =null;
 		   try {
-			   conn = getConnection();	
 			   ps = conn.prepareStatement("SELECT question, answer FROM quiz");
 			   rs = ps.executeQuery();
-			   quiz = new String[8][2]; 
-			 int i=0;
-			 while(rs.next()){
-					   quiz[i][0] = rs.getString(1);
-					   quiz[i][1] = rs.getString(2);
-					   i++;
-			}  
-			
+			   
+			   rs.last();
+			   int size = rs.getRow();
+			   rs.beforeFirst();
+			   
+			   quiz = new String[size][2]; 
+		
+			 for(int i=0;i<size;i++){
+				 rs.next();
+				 quiz[i][0] = rs.getString(1);
+				 quiz[i][1] = rs.getString(2);
+				 
+			 }
+		
 			   
 		   } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		   } finally {
+			   close();
 		   }
 		   return quiz;
-	   }*/
+	   }
 
 	   public static boolean insertUser(String id, String passwd) {
 		   boolean result = false;

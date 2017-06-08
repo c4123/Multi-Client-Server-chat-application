@@ -16,7 +16,8 @@
          </font>
       </Label>
       <TextField fx:id="mail" layoutX="27.0" layoutY="137.0" prefHeight="29.0" prefWidth="247.0" promptText="E-mail" />
-      <Button fx:id="Regconfirm" alignment="CENTER" layoutX="28.0" layoutY="403.0" mnemonicParsing="false" onAction="#Regconfirm" prefHeight="36.0" prefWidth="247.0" text="회원가입" />
+      <TextField fx:id="pwd" layoutX="25.0" layoutY="176.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호" />
+      <TextField fx:id="pwdconf" layoutX="25.0" layoutY="215.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호 확인" />
       <CheckBox fx:id="Check1" layoutX="25.0" layoutY="328.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="247.0" text="이용약관에 동의합니다">
          <font>
             <Font size="13.0" />
@@ -27,8 +28,7 @@
             <Font size="13.0" />
          </font>
       </CheckBox>
+      <Button fx:id="Regconfirm" alignment="CENTER" layoutX="28.0" layoutY="403.0" mnemonicParsing="false" onAction="#Regconfirm" prefHeight="36.0" prefWidth="247.0" text="회원가입" />
       <Label fx:id="Regwarning" alignment="CENTER" layoutX="28.0" layoutY="449.0" prefHeight="19.0" prefWidth="247.0" textFill="RED" />
-      <TextField fx:id="pwd" layoutX="25.0" layoutY="176.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호" />
-      <TextField fx:id="pwdconf" layoutX="25.0" layoutY="215.0" prefHeight="29.0" prefWidth="247.0" promptText="비밀번호 확인" />
    </children>
 </AnchorPane>

@@ -18,5 +18,10 @@
       <TextField fx:id="confinput" layoutX="64.0" layoutY="36.0" />
       <Button fx:id="confbtn" layoutX="97.0" layoutY="76.0" mnemonicParsing="false" onAction="#Conf" prefHeight="29.0" prefWidth="107.0" text="인증하기" />
       <Label fx:id="error" alignment="CENTER" layoutX="32.0" layoutY="14.0" prefHeight="19.0" prefWidth="237.0" textFill="RED" />
+      <ImageView fitHeight="29.0" fitWidth="25.0" layoutX="270.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/close_normal.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -109,6 +109,8 @@ public class Listener implements Runnable{
                             controller.setUserList(message);
                             break;
                             */
+                        case Constants.TYPE_WHISPER:
+                        	controller.addToChat(message);
                           default:
                         	  break;
                     }
@@ -128,6 +130,13 @@ public class Listener implements Runnable{
         Data createMessage = new Data(Constants.TYPE_MSG, msg, null);
         oos.writeObject(createMessage);
         oos.flush();
+    }
+    
+    public static void sendAsWhisper(String receiverEmail, String msg) throws IOException {
+    	Data createMessage = new Data(Constants.TYPE_WHISPER, msg, null);
+    	createMessage.setReceiverEmail(receiverEmail);
+    	oos.writeObject(createMessage);
+    	oos.flush();
     }
 
     /* This method is used for sending a voice Message

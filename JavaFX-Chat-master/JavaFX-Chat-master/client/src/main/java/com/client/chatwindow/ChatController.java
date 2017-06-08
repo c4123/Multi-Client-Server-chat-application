@@ -61,6 +61,7 @@ public class ChatController implements Initializable {
     @FXML private ListView userList;
     @FXML private ImageView userImageView;
     @FXML private Button recordBtn;
+    @FXML private Label chatnotice;
     @FXML ListView chatPane;
     @FXML ListView statusList;
     @FXML BorderPane borderPane;
@@ -77,8 +78,16 @@ public class ChatController implements Initializable {
 
     public void sendButtonAction() throws IOException {
         String msg = messageBox.getText();
+        
         if (!messageBox.getText().isEmpty()) {
-            Listener.send(msg);
+        	if(msg.startsWith("/w")) {
+        		//귓속말
+        		String[] whisperMsg = msg.split("\\s", 3);
+        		whisperMsg[2] = whisperMsg[2].trim();
+        		Listener.sendAsWhisper(whisperMsg[1], whisperMsg[2]);
+        	} else {
+        		Listener.send(msg);        		
+        	}
             messageBox.clear();
         }
     }
@@ -312,12 +321,6 @@ public class ChatController implements Initializable {
 
     public void setImageLabel(String selectedPicture) {
         switch (selectedPicture) {
-            case "Dominic":
-                this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/Dominic.png").toString()));
-                break;
-            case "Sarah":
-                this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/sarah.png").toString()));
-                break;
             case "Default":
                 this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/default.png").toString()));
                 break;
@@ -342,4 +345,8 @@ public class ChatController implements Initializable {
             stage.centerOnScreen();
         });
     }
+    
+    /*public void chatnotice(){
+    	chatnotice.setText();
+    }*/ //공지사항
 }

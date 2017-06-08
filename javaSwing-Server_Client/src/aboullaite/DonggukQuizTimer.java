@@ -15,6 +15,7 @@ public class DonggukQuizTimer extends TimerTask {
 		 quizStart = false;
 		 lastAnswerEmail="";
 		// TODO Auto-generated constructor stub
+		 DBHelper.getConnection();
 		 quizAnswer = DBHelper.getQuiz();
 		 System.out.println("퀴즈 데이터 "+quizAnswer.length+"개 받아옴");
 	 }
