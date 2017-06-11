@@ -32,12 +32,15 @@
 * JavaConnectJ
   * [Download](https://dev.mysql.com/downloads/connector/j/)
 
-*jsoup-1.10.2
+* jsoup-1.10.2
   * [Download](https://jsoup.org/download)
+
+
 
 ## License
 
 This program is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License](https://en.wikipedia.org/wiki/GNU_General_Public_License)
+
 
 ## Copyright
 
