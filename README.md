@@ -1,6 +1,6 @@
 # Unichat: Chat system for University Students 
 
-<img src="http://i.imgur.com/DYWAEq0.jpg" width="250"/>
+<img src="http://i.imgur.com/aMJQ6i5.jpg" width="250"/>
 
 [Unichat](http://github.com/NProject_SW)(Univeristy Chat) is a [free/libre](https://gnu.org/philosophy/free-sw.html) and open source chat program for University Students that is built on the basis of a [Multi-Client-Server-chat-application](https://github.com/aboullaite/Multi-Client-Server-chat-application) made by [Aboullaite](https://github.com/aboullaite)
 
@@ -31,6 +31,9 @@
 
 * JavaConnectJ
   * [Download](https://dev.mysql.com/downloads/connector/j/)
+
+*jsoup-1.10.2
+  * [Download](https://jsoup.org/download)
 
 ## License
 
