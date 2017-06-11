@@ -1,16 +1,13 @@
 # Unichat: Chat system for University Students 
 
-* **Mobile
-  *Login</a>
+* **Mobile**
 <img src="http://i.imgur.com/aMJQ6i5.jpg" width="250"/>
-  *Chat</a>
 <img src="http://i.imgur.com/eGcyEBB.png" width="250"/>
 
 
-* **Desktop
-  *Login</a>
+* **Desktop**
+
 <img src="http://i.imgur.com/NUX4D2S.png" width="250"/>
-  *Chat</a>
 <img src="http://i.imgur.com/vWcb6xz.png" widht="500"/>
 
 
