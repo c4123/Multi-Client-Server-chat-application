@@ -193,7 +193,7 @@ public class ChatController implements Initializable {
     }
 
     public void setImageLabel() throws IOException {
-        this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/Dominic.png").toString()));
+        this.userImageView.setImage(new Image(getClass().getClassLoader().getResource("images/default.png").toString()));
     }
 
     public void setOnlineLabel(String usercount) {
@@ -347,6 +347,8 @@ public class ChatController implements Initializable {
     }
     
     public void chatnotice(Data msg){
-    	chatnotice.setText(msg.getMsg());
+    	Platform.runLater(() -> {
+    		chatnotice.setText(" <공지사항> " + msg.getMsg());    		
+    	});
     }
 }
