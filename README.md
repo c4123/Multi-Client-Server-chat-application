@@ -9,7 +9,7 @@
 
 * Java socket chat program
 * Built with Java, JavaFX and Android
-* **Register by your university's webmail
+* **Register by your university's webmail**
   * Only Dongguk Univ's mail is available by now
   * Feel free to add your University's webmail address
 * Available on desktop & mobile
@@ -45,4 +45,4 @@ This program is free software: you can redistribute it and/or modify it under th
 Copyleft Team JoahJoah( [@aronix](https://github.com/aronix) [@c4123](https://github.com/c4123) [@jinbeomdev](https://github.com/jinbeomdev) [@SeungHoon00](https://github.com/SeungHoon00) )
 
 
-***Note: This program is made as a university project and may have some amatuer coding ***
+***Note: This program is made as a university project and may have some amatuer coding***
