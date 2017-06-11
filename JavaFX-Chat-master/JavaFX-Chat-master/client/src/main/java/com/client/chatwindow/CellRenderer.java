@@ -30,11 +30,11 @@ class CellRenderer implements Callback<ListView<User>,ListCell<User>>{
                     Text name = new Text(user.getId());
 
                     ImageView statusImageView = new ImageView();
-                    Image statusImage = new Image(getClass().getClassLoader().getResource("images/default.png").toString(), 16, 16,true,true);
+                    Image statusImage = new Image(getClass().getClassLoader().getResource("images/online.png").toString(), 10, 10,true,true);
                     statusImageView.setImage(statusImage);
 
                     ImageView pictureImageView = new ImageView();
-                    Image image = new Image(getClass().getClassLoader().getResource("images/default.png").toString(),50,50,true,true);
+                    Image image = new Image(getClass().getClassLoader().getResource("images/default.png").toString(),30,30,true,true);
                     pictureImageView.setImage(image);
 
                     hBox.getChildren().addAll(statusImageView, pictureImageView, name);

@@ -127,8 +127,8 @@ public class ChatController implements Initializable {
                     VoicePlayback.playAudio(message.getVoiceMsg());
                  */
                // }else {
-                    bl6.setText(message.getSendorEmail() + ": " + message.getMsg());
-                    System.out.println("addToChat : " + message.getSendorEmail() + ": " + message.getMsg());
+                    bl6.setText(message.getSendorNickName() + ": " + message.getMsg());
+                    System.out.println("addToChat : " + message.getSendorNickName() + ": " + message.getMsg());
                //}
                 bl6.setBackground(new Background(new BackgroundFill(Color.WHITE,null, null)));
                 HBox x = new HBox();
@@ -203,8 +203,8 @@ public class ChatController implements Initializable {
     public void setUserList(Data message) {
         logger.info("setUserList() method Enter");
         Platform.runLater(() -> {
-            ObservableList<aboullaite.User> users = FXCollections.observableList(message.getUserList());
-            userList.setItems(users);
+            ObservableList<aboullaite.User> user = FXCollections.observableList(message.getUserList());
+            userList.setItems(user);
             userList.setCellFactory(new CellRenderer());
             setOnlineLabel(String.valueOf(message.getUserList().size()));
         });
