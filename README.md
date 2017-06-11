@@ -2,7 +2,7 @@
 
 * **Mobile**
 
-<img src="http://i.imgur.com/aMJQ6i5.jpg" width="250"/> &nbsp;&nbsp; <img src="http://i.imgur.com/eGcyEBB.png" width="250"/>
+<img src="http://i.imgur.com/aMJQ6i5.jpg" width="250"/> &nbsp;&nbsp; <img src="http://i.imgur.com/ZI2q3XP.png" width="250"/>
 
 
 * **Desktop**
@@ -20,7 +20,7 @@
 * **Register by your university's webmail**
   * Only Dongguk Univ's mail is available by now
   * Feel free to add your University's webmail address
-* Available on desktop & mobile
+* Available on desktop & Android mobile
 * ChatBot that replies on few internal commands
 * Mini games that allows users to update the announcement
 
