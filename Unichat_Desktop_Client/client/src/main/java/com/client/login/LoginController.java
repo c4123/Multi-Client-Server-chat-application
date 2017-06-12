@@ -173,7 +173,6 @@ public class LoginController implements Initializable {
     /* This method is used to generate the animation on the login window, It will generate random ints to determine
      * the size, speed, starting points and direction of each square.
      */
-    /*
     public void generateAnimation(){
         Random rand = new Random();
         int sizeOfSqaure = rand.nextInt(50) + 1;
@@ -235,7 +234,6 @@ public class LoginController implements Initializable {
         timeline.play();
         borderPane.getChildren().add(borderPane.getChildren().size()-1,r1);
     }
-    */
     
 
     /* Terminates Application */
