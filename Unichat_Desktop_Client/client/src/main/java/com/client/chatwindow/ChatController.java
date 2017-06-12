@@ -120,23 +120,12 @@ public class ChatController implements Initializable {
                 profileImage.setFitHeight(32);
                 profileImage.setFitWidth(32);
                 BubbledLabel bl6 = new BubbledLabel();
-                /*
-                if (message.getType() == MessageType.VOICE){
-                    ImageView imageview = new ImageView(new Image(getClass().getClassLoader().getResource("images/sound.png").toString()));
-                    bl6.setGraphic(imageview);
-                    bl6.setText("Sent a voice message!");
-                    VoicePlayback.playAudio(message.getVoiceMsg());
-                 */
-               // }else {
                     bl6.setText(message.getSendorNickName() + ": " + message.getMsg());
                     System.out.println("addToChat : " + message.getSendorNickName() + ": " + message.getMsg());
-               //}
                 bl6.setBackground(new Background(new BackgroundFill(Color.WHITE,null, null)));
                 HBox x = new HBox();
                 bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
                 x.getChildren().addAll(profileImage, bl6);
-                //logger.debug("ONLINE USERS: " + Integer.toString(message.getUserList().size()));
-                //setOnlineLabel(Integer.toString(message.getOnlineCount()));
                 return x;
             }
         };
@@ -154,16 +143,8 @@ public class ChatController implements Initializable {
                 profileImage.setFitWidth(32);
 
                 BubbledLabel bl6 = new BubbledLabel();
-                /*
-                if (message.getType() == MessageType.VOICE){
-                    bl6.setGraphic(new ImageView(new Image(getClass().getClassLoader().getResource("images/sound.png").toString())));
-                    bl6.setText("Sent a voice message!");
-                    VoicePlayback.playAudio(message.getVoiceMsg());
-                    */
-                //}else {
                     bl6.setText(message.getMsg());
                     System.out.println("yourMessages" + message.getMsg());
-                //}
                 bl6.setBackground(new Background(new BackgroundFill(Color.LIGHTGREEN,
                         null, null)));
                 HBox x = new HBox();
@@ -172,7 +153,6 @@ public class ChatController implements Initializable {
                 bl6.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
                 x.getChildren().addAll(bl6, profileImage);
 
-                //setOnlineLabel(Integer.toString(message.getOnlineCount()));
                 return x;
             }
         };

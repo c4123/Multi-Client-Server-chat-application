@@ -86,29 +86,9 @@ public class Listener implements Runnable{
                     switch (message.getType()) {
                         case Constants.TYPE_MSG:
                             controller.addToChat(message);
-                            break;
-                            /*
-                        case VOICE:
-                            controller.addToChat(message);
-                            break;
-                        case NOTIFICATION:
-                            controller.newUserNotification(message);
-                            break;
-                        case SERVER:
-                            controller.addAsServer(message);
-                            break;
-                            */
-                        case Constants.TYPE_USER_LIST:
+                            break;.TYPE_USER_LIST:
                             controller.setUserList(message);
                             break;
-                            /*
-                        case DISCONNECTED:
-                            controller.setUserList(message);
-                            break;
-                        case STATUS:
-                            controller.setUserList(message);
-                            break;
-                            */
                         case Constants.TYPE_WHISPER:
                         	controller.addToChat(message);
                         case Constants.TYPE_NOTIFICATION:
