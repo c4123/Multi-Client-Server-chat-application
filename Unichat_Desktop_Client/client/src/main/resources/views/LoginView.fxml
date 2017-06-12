@@ -42,23 +42,7 @@
             <Label text="IP : " textFill="#f89406" GridPane.rowIndex="6" />
             <TextField fx:id="portTextfield" prefHeight="13.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label prefHeight="22.0" prefWidth="104.0" text="Server Details" textFill="#f89406" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <StackPane prefHeight="78.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <ImageView fx:id="Defaultview" fitHeight="93" fitWidth="93" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/default.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </StackPane>
-            <ChoiceBox fx:id="imagePicker" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <items>
-                  <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Default" />
-                  </FXCollections>
-               </items>
-                    </ChoiceBox>
-            <Label fx:id="selectedPicture" text="Label" GridPane.rowIndex="1" />
+            <StackPane prefHeight="78.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                <children>
                   <Button id="MinimizedBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="24.0" maxWidth="68.0" minWidth="45.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="24.0" prefWidth="45.0" stylesheets="@../styles/Login.css">
@@ -83,12 +67,12 @@
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <children>
                   
-                  <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" defaultButton="true" onAction="#loginButtonAction" prefHeight="25.0" prefWidth="142.0" stylesheets="@../styles/Login.css" text="로그인">
+                  <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="25.0" prefWidth="142.0" stylesheets="@../styles/Login.css" text="로그인" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Register" prefHeight="25.0" prefWidth="142.0" stylesheets="@../styles/Login.css" text="회원가입">
+                  <Button id="connectBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#Register" prefHeight="25.0" prefWidth="142.0" stylesheets="@../styles/Login.css" text="회원가입" textFill="WHITE">
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>

@@ -115,14 +115,6 @@
          <left>
             <HBox prefWidth="259.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fx:id="userImageView" fitHeight="69.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/default.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="10.0" top="10.0" />
-                     </HBox.margin>
-                  </ImageView>
                   <VBox prefHeight="0.0" prefWidth="110.0">
                      <HBox.margin>
                         <Insets left="10.0" top="30.0" />
@@ -133,15 +125,6 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="statusComboBox" prefHeight="27.0" prefWidth="110.0" promptText="Online" stylesheets="@../styles/ComboBox.css">
-                           <items>
-                              <FXCollections fx:factory="observableArrayList">
-                                 <String fx:value="Online" />
-                                 <String fx:value="Away" />
-                                 <String fx:value="Busy" />
-                              </FXCollections>
-                           </items>
-                        </ComboBox>
                      </children>
                   </VBox>
                </children></HBox>
