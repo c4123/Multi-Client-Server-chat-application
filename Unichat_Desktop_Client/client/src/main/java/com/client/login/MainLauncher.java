@@ -20,7 +20,7 @@ public class MainLauncher extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Socket Chat : Client version 0.3");
         primaryStage.getIcons().add(new Image(getClass().getClassLoader().getResource("images/menuicon.png").toString()));
-        Scene mainScene = new Scene(root, 350, 420);
+        Scene mainScene = new Scene(root, 350, 500);
         mainScene.setRoot(root);
         primaryStage.setResizable(false);
         primaryStage.setScene(mainScene);

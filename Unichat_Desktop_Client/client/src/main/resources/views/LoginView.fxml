@@ -24,8 +24,8 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="149.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="226.0" minHeight="10.0" prefHeight="149.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="149.0" minHeight="5.0" prefHeight="13.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="126.0" minHeight="12.0" prefHeight="47.0" />
             <RowConstraints maxHeight="113.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
@@ -42,7 +42,14 @@
             <Label text="IP : " textFill="#f89406" GridPane.rowIndex="6" />
             <TextField fx:id="portTextfield" prefHeight="13.0" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label prefHeight="22.0" prefWidth="104.0" text="Server Details" textFill="#f89406" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <StackPane prefHeight="78.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <StackPane prefHeight="78.0" prefWidth="188.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/donggukicon.jpg" />
+                     </image>
+                  </ImageView>
+               </children></StackPane>
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                <children>
                   <Button id="MinimizedBtn" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="24.0" maxWidth="68.0" minWidth="45.0" mnemonicParsing="false" onAction="#minimizeWindow" prefHeight="24.0" prefWidth="45.0" stylesheets="@../styles/Login.css">
