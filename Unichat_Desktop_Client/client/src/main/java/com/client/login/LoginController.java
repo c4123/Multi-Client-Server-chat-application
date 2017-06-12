@@ -151,24 +151,12 @@ public class LoginController implements Initializable {
                         case "Default":
                             Defaultview.setVisible(false);
                             break;
-                        case "Dominic":
-                            Dominicview.setVisible(false);
-                            break;
-                        case "Sarah":
-                            Sarahview.setVisible(false);
-                            break;
                     }
                 }
                 if (newPicture != null) {
                     switch (newPicture) {
                         case "Default":
                             Defaultview.setVisible(true);
-                            break;
-                        case "Dominic":
-                            Dominicview.setVisible(true);
-                            break;
-                        case "Sarah":
-                            Sarahview.setVisible(true);
                             break;
                     }
                 }
