@@ -65,12 +65,12 @@ public class LoginController implements Initializable {
         String hostname = hostnameTextfield.getText();
         String port = portTextfield.getText();
         String username = usernameTextfield.getText();
-        String picture = selectedPicture.getText();
+        //String picture = selectedPicture.getText();
 
         FXMLLoader fmxlLoader = new FXMLLoader(getClass().getResource("/views/ChatView.fxml"));
         Parent window = (Pane) fmxlLoader.load();
         con = fmxlLoader.<ChatController>getController();
-        Listener listener = new Listener(hostname, port, username, picture, con);
+        Listener listener = new Listener(hostname, port, username, "/images/default.png", con);
         Thread x = new Thread(listener);
         x.start();
         this.scene = new Scene(window);
@@ -122,9 +122,9 @@ public class LoginController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        imagePicker.getSelectionModel().selectFirst();
-        selectedPicture.textProperty().bind(imagePicker.getSelectionModel().selectedItemProperty());
-        selectedPicture.setVisible(false);
+        //imagePicker.getSelectionModel().selectFirst();
+        //selectedPicture.textProperty().bind(imagePicker.getSelectionModel().selectedItemProperty());
+        //selectedPicture.setVisible(false);
 
         /* Drag and Drop */
         borderPane.setOnMousePressed(event -> {
@@ -143,6 +143,7 @@ public class LoginController implements Initializable {
             borderPane.setCursor(Cursor.DEFAULT);
         });
 
+        /*
         imagePicker.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> selected, String oldPicture, String newPicture) {
@@ -162,9 +163,10 @@ public class LoginController implements Initializable {
                 }
             }
         });
+        */
         int numberOfSquares = 30;
         while (numberOfSquares > 0){
-            generateAnimation();
+            //generateAnimation();
             numberOfSquares--;
         }
     }
