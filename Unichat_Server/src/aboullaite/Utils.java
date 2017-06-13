@@ -18,26 +18,14 @@ public class Utils {
 	
 	//length 자리 인증코드를 만들어내는 함수.
 	public static String generateNumber(int length) {
+		 Random random = new Random();
+		 String result="";
 		 
-	    String numStr = "1";
-	    String plusNumStr = "1";
-	 
-	    for (int i = 0; i < length; i++) {
-	        numStr += "0";
-	 
-	        if (i != length - 1) {
-	            plusNumStr += "0";
-	        }
-	    }
-	 
-	    Random random = new Random();
-	    int result = random.nextInt(Integer.parseInt(numStr)) + Integer.parseInt(plusNumStr);
-	 
-	    if (result > Integer.parseInt(numStr)) {
-	        result = result - Integer.parseInt(plusNumStr);
-	    }
-	 
-	    return Integer.toString(result);
+		 for(int i=0;i<6;i++){
+			 int num = random.nextInt(10);
+			 result = result + num;
+		 }
+		 return result;
 	}
 	
 	public static void sendMail(String emailAdress, String Code) {
