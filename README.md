@@ -52,7 +52,7 @@ This program is free software: you can redistribute it and/or modify it under th
 
 ## Copyright
 
-Copyleft Team JoahJoah( [@aronix](https://github.com/aronix) [@c4123](https://github.com/c4123) [@jinbeomdev](https://github.com/jinbeomdev) [@SeungHoon00](https://github.com/SeungHoon00) )
+Copyleft Team JoahJoah( [@HanSeungBeom](https://github.com/HanSeungBeom) [@c4123](https://github.com/c4123) [@jinbeomdev](https://github.com/jinbeomdev) [@SeungHoon00](https://github.com/SeungHoon00) )
 
 
 ***Note: This program is made as a university project and may have some amatuer coding***
